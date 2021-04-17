@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>地图显示</title>
+    <style>
+        html,
+        body,
+        div,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
+    <!--引入jQuery-->
+    <script src="https://code.jquery.com/jquery-2.2.3.js" type="text/javascript"></script>
+    <script type="text/javascript"
+            src="https://webapi.amap.com/maps?v=1.4.15&key=d5a0350fba816f16ff15e1c9c7b7ecf9&plugin=AMap.ToolBar,AMap.StationSearch,AMap.Marker,AMap.PixelAMap.Autocomplete,AMap.PlaceSearch,AMap.Autocomplete,AMap.PlaceSearch,AMap.Transfer,AMap.Icon"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/demos/js/liteToolbar.js"></script>
+</head>
+<!--样式-->
+<style>
+    /*已登录窗口*/
+    /*字体*/
+    .barText {
+        font-family: 微软雅黑, sans-serif;
+        font-size: 14px;
+    }
+
+    /*分割线*/
+    .barLine {
+        height: 1px;
+        width: auto;
+        background-color: #86bfbd
+    }
+
+    /*按钮*/
+    .barBtn {
+        text-align: center;
+        height: 25px;
+        width: auto;
+        background-color: #afe9ff;
+        border-radius: 2px;
+    }
+
+    /*按钮选中*/
+    .barBtnOn {
+        text-align: center;
+        height: 25px;
+        width: auto;
+        background-color: #93daee;
+        border-radius: 2px;
+    }
+
+    /*未登录窗口*/
+    /*按钮*/
+    .lgBarBtn {
+        text-align: center;
+        height: 23px;
+        width: auto;
+        background-color: #c1c1c1;
+        border-radius: 2px;
+    }
+
+    .lgBarBtnLeft {
+        height: 25px;
+        width: auto;
+        background-color: #f5f5f5;
+        border-radius: 2px;
+    }
+
+    .lgBarText {
+        font-family: 微软雅黑, sans-serif;
+        font-size: 12px;
+    }
+
+    #tip {
+        background-color: #ddf;
+        color: #333;
+        border: 1px solid silver;
+        box-shadow: 3px 4px 3px 0px silver;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+        line-height: 20px;
+        width: 20%;
+        height: 500px;
+    }
+
+    #tip input[type="text"] {
+        height: 25px;
+        width: 100%;
+        border: 0;
+        padding-left: 5px;
+        border-radius: 3px;
+        outline: none;
+    }
+
+    #amap-sug-result {
+        visibility: visible;
+        display: block;
+        left: 0px;
+        top: 38px;
+        min-width: 20px;
+    }
+
+    #outer-box {
+        height: 100%;
+        padding-right: 300px;
+    }
+
+    #container {
+        height: 100%;
+        width: 100%;
+    }
+
+    #panel {
+        position: absolute;
+        top: 61px;
+        bottom: 0;
+        left: 0;
+        height: 500px;
+        overflow: auto;
+        width: 300px;
+        z-index: 999;
+        border-left: 1px solid #eaeaea;
+        background: #fff;
+        border-style: solid;
+        border-width: 2px;
+    }
+
+    #searchBar {
+        height: 30px;
+        background: #ccc;
+    }
+
+    .searchInput {
+        width: 100%;
+        height: 30px;
+        line-height: 30%;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        padding: 0 5px;
+    }
+
+    #searchResults {
+        overflow: auto;
+        height: calc(100% - 30px);
+    }
+
+    .amap_lib_placeSearch,
+    .amap-ui-poi-picker-sugg-container {
+        border: none !important;
+    }
+
+    .amap_lib_placeSearch .poibox.highlight {
+        background-color: #CAE1FF;
+    }
+
+    .poi-more {
+        display: none !important;
+    }
+
+    #panel1 {
+        position: fixed;
+        background-color: white;
+        max-height: 90%;
+        overflow-y: auto;
+        top: 10px;
+        right: 10px;
+        width: 280px;
+    }
+
+    #panel1 .amap-call {
+        background-color: #009cf9;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
+
+    #panel1 .amap-lib-driving {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        overflow: hidden;
+    }
+</style>
+
+<body style="background-color: #f5f5dc33">
+
+<!--头部-->
+<div style="background-color: #90d8ff; height: 50px"><!--导航栏-->
+
+    <!--用户栏-->
+    <div id="bar"
+         style="float: right;width: 60px; background-color: #84c5e8"
+         onmousemove="this.style.backgroundColor='#90cfff'"
+         onmouseout="this.style.backgroundColor='#84c5e8'"
+         onclick="">
+        <div>
+            <img id="barImg" src="img/unLogin.png" style="border-radius: 30px;width:50px;height:50px;margin-left: 5px;"
+                 alt=""/>
+        </div>
+    </div>
+</div><!--导航栏-->
+
+<!--渐变过渡条-->
+<div style="background-image: linear-gradient(#90d8ff, #00000088);height: 1px"></div>
+<!--已登录登录栏-->
+<div id="userBarOk" hidden="hidden"
+     style="float:right; height: 247px;width: 160px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#a6dffdaa, #a6dffdaa);">
+    <!--内容-->
+    <div style="height: 240px;width: 157px; margin-top: 2px; margin-left: 2px; background-color: #8ebed7; border-radius: 5px;">
+        <div style="background-color: #a6dffd;height: 140px;border-radius: 5px;">
+            <!--头像-->
+            <div style="margin: 0 auto;height: 100px;width: 147px;background-color: #a6dffd;border-radius: 5px;">
+                <img id="userImg" src="img/unLogin.png"
+                     style="border-radius: 40px;width:80px;height:80px;margin-left: 35px; margin-top: 20px;"
+                     alt=""/>
+            </div>
+
+            <!--用户名-->
+            <div style="text-align: center; height:40px ;max-width:147px ;background-color: #a6dffd;border-radius: 2px;">
+                <a style="" id="loginUsername"></a>
+            </div>
+        </div>
+
+        <!--分割线-->
+        <div class="barLine"></div>
+
+        <div class="barBtn" id="userDetail">
+            <a class="barText">个人信息</a>
+        </div>
+
+        <!--分割线-->
+        <div class="barLine"></div>
+
+        <div class="barBtn" id="favorites">
+            <a class="barText">收藏</a>
+        </div>
+
+        <!--分割线-->
+        <div class="barLine"></div>
+
+        <div class="barBtn" id="history">
+            <a class="barText">历史记录</a>
+        </div>
+
+        <!--分割线-->
+        <div class="barLine"></div>
+
+        <div class="barBtn" id="logout">
+            <a class="barText">注销</a>
+        </div>
+
+    </div>
+</div>
+
+<!--未登录登录栏-->
+<div id="userBarNo" hidden="hidden"
+     style="float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
+    <!--内容-->
+    <div style="height: 145px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
+        <!--头像-->
+        <div style="margin: 0 auto;height: 120px;width: 147px;background-color: #979797">
+            <img src="img/unLogin.png"
+                 style="border-radius: 40px;width:80px;height:80px;margin-left: 35px; margin-top: 20px;"
+                 alt=""/>
+        </div>
+        <div class="lgBarBtn"
+             onmousemove="this.style.backgroundColor='#d5d5d5'" onmouseout="this.style.backgroundColor='#c1c1c1'"
+             id="inLogin" onclick="document.getElementById('loginBar').hidden=!document.getElementById('loginBar').hidden;
+                                    document.getElementById('userBarNo').hidden='hidden'">
+            <a class="barText">登录</a>
+        </div>
+        <div class="lgBarBtn"
+             onmousemove="this.style.backgroundColor='#d5d5d5'" onmouseout="this.style.backgroundColor='#c1c1c1'"
+             id="inRegister" onclick="document.getElementById('registerBar').hidden=!document.getElementById('registerBar').hidden;
+                                    document.getElementById('userBarNo').hidden=true">
+            <a class="barText">注册</a>
+        </div>
+    </div>
+</div>
+
+<!--登录窗口-->
+<div id="loginBar" hidden="hidden"
+     style="float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
+    <!--内容-->
+    <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
+        <form action="/login">
+            <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
+                <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; font-weight: bold">登录</a>
+            </div>
+            <div class="lgBarBtnLeft"><a class="barText">用户名</a></div>
+            <input type="text" name="username" id="username"
+                   style="outline-style: none; border: 0; height: 30px; width: 147px;">
+            <div class="lgBarBtnLeft"><a class="barText">密码</a></div>
+            <input type="password" name="password" id="password"
+                   style="outline-style: none; border: 0; height: 30px; width: 147px; padding: 4.5px 9px;">
+            <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
+                 onmousemove="this.style.backgroundColor='#c0ffe7'" onmouseout="this.style.backgroundColor='#daffed'"
+                 id="loginBtn">
+                <a class="barText">登录</a></div>
+            <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
+            <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
+                 onmousemove="this.style.backgroundColor='#e7e7e7'" onmouseout="this.style.backgroundColor='#f5f5f5'"
+                 onclick="document.getElementById('loginBar').hidden=true;document.getElementById('userBarNo').hidden=false">
+                <a class="barText">返回</a></div>
+        </form>
+    </div>
+</div>
+
+
+<!--注册窗口-->
+<div id="registerBar" hidden="hidden"
+     style="float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
+    <!--内容-->
+    <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
+        <form action="/login">
+            <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
+            <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; font-weight: bold">注册</a>
+            </div>
+            <div class="lgBarBtnLeft"><a class="barText">用户名</a></div>
+            <input type="text" name="username" id="rUsername"
+                   style="outline-style: none; border: 0; height: 30px; width: 147px;">
+            <div class="lgBarBtnLeft"><a class="barText">密码</a></div>
+            <input type="password" name="password" id="rPassword"
+                   style="outline-style: none; border: 0; height: 30px; width: 147px; padding: 4.5px 9px;">
+            <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
+                 onmousemove="this.style.backgroundColor='#c0ffe7'" onmouseout="this.style.backgroundColor='#daffed'"
+                 id="registerBtn">
+                <a class="barText">注册</a></div>
+            <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
+            <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
+                 onmousemove="this.style.backgroundColor='#e7e7e7'" onmouseout="this.style.backgroundColor='#f5f5f5'"
+                 onclick="document.getElementById('registerBar').hidden=true;document.getElementById('userBarNo').hidden=false">
+                <a class="barText">返回</a></div>
+        </form>
+    </div>
+</div>
+
+
+<!--阴影-->
+<div style="background-image: linear-gradient(#00000088, #ffffff00);height: 10px"></div><!--阴影-->
+
+<!--地点选择框-->
+<!--<div id="panel" class="scrollbar1">
+    <div >
+        <table id="searchBar">
+            <tr style="background-color: #a6dffd;">
+                <td>
+                    <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; float: left; width: auto;">出发地：</a>
+                </td>
+                <td>
+                    <input type="text" style="float: left;width: auto;" class="searchInput" id="searchInputFrom"
+                           placeholder="请输入" value=""/>
+                </td>
+                <td rowspan="2">
+                    <div style="float: left; width: auto;font-family: 微软雅黑, sans-serif; font-size: 16px; margin: auto; background-color: #8ebed7; border-radius: 2px; text-align: center;"
+                         onmousemove="this.style.backgroundColor='#8ec6d7'"
+                         onmouseout="this.style.backgroundColor='#8ebed7'"
+                         onclick="pathFind()">
+                        <div style="margin-top:15px;"><a>搜索</a></div>
+                    </div>
+                </td>
+            </tr>
+            <tr style="background-color: #a6dffd;">
+                <td>
+                    <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; float: left; width: auto;">目的地：</a>
+                </td>
+                <td>
+                    <input type="text" style="float: left;width: auto;" class="searchInput" id="searchInputTo"
+                           placeholder="请输入" value=""/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="searchResults"></div>
+</div>-->
+
+
+<!--地点选择-->
+<div id="panel" class="scrollbar">
+    <div>
+        <input type="button" value="选择出发地"
+               id="pathStart"
+               style="border-radius: 5px;height: 30px;width: 100px;background-color: #91d0fd"
+               onmousemove="this.style.backgroundColor='#91c4e2'"
+               onmouseout="this.style.backgroundColor='#91d0fd'"
+               onclick="this.hidden=true;document.getElementById('pathStartChoose').hidden=false;
+                           if (document.getElementById('pathEndChoose').hidden===false){document.getElementById('pathEndChoose').hidden=true;document.getElementById('pathEnd').hidden=false}">
+        <input type="button" value="选择出发地"
+               id="pathStartChoose"
+               hidden
+               style="border-radius: 5px;height: 30px;width: 100px;background-color: #5f9ed7"
+               onclick="this.hidden=true;document.getElementById('pathStart').hidden=false">
+        <input type="button" value="选择目的地"
+               id="pathEnd"
+               style="border-radius: 5px;height: 30px;width: 100px;background-color: #91d0fd"
+               onmousemove="this.style.backgroundColor='#91c4e2'"
+               onmouseout="this.style.backgroundColor='#91d0fd'"
+               onclick="this.hidden=true;document.getElementById('pathEndChoose').hidden=false
+                            if (document.getElementById('pathStartChoose').hidden===false){document.getElementById('pathStartChoose').hidden=true;document.getElementById('pathStart').hidden=false}">
+        <input type="button" value="选择目的地"
+               id="pathEndChoose"
+               hidden
+               style="border-radius: 5px;height: 30px;width: 100px;background-color: #5f9ed7"
+               onclick="this.hidden=true;document.getElementById('pathEnd').hidden=false;">
+        <input type="button" value="搜索"
+               id="searchWays"
+               style="border-radius: 5px;height: 30px;width: 100px;background-color: #ffebb9">
+    </div>
+</div>
+<script src="//webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
+<script>
+    /*搜索位置*/
+    /*AMapUI.loadUI(['misc/PoiPicker'], function (PoiPicker) {
+
+        var poiPicker = new PoiPicker({
+            input: 'searchInputFrom',
+            placeSearchOptions: {
+                map: map,
+                pageSize: 10
+            },
+            searchResultsContainer: 'searchResults'
+        });
+
+        poiPicker.on('poiPicked', function (poiResult) {
+
+            poiPicker.hideSearchResults();
+
+            var source = poiResult.source,
+                poi = poiResult.item;
+
+            if (source !== 'search') {
+
+                //suggest来源的，同样调用搜索
+                poiPicker.searchByKeyword(poi.name);
+
+            } else {
+
+                //console.log(poi);
+            }
+        });
+
+        poiPicker.onCityReady(function () {
+            poiPicker.searchByKeyword('');
+        });
+
+        var poiPicker1 = new PoiPicker({
+            input: 'searchInputTo',
+            placeSearchOptions: {
+                map: map,
+                pageSize: 10
+            },
+            searchResultsContainer: 'searchResults'
+        });
+
+        poiPicker1.on('poiPicked', function (poiResult) {
+
+            poiPicker.hideSearchResults();
+
+            var source = poiResult.source,
+                poi = poiResult.item;
+
+            if (source !== 'search') {
+
+                //suggest来源的，同样调用搜索
+                poiPicker1.searchByKeyword(poi.name);
+
+            } else {
+
+                //console.log(poi);
+            }
+        });
+
+        poiPicker.onCityReady(function () {
+            poiPicker.searchByKeyword('');
+        });
+    });*/
+
+</script>
+
+<!--地图框-->
+<div style="border-style:solid; border-width:2px; width: 500px; height: 500px; position: absolute; left: 300px"
+     id="mapBorder">
+    <!-- 加载地图JSAPI脚本 -->
+    <div id="container"></div>
+</div>
+
+<!--触发自动定位-->
+<div class="info" hidden>
+    <h4 id='status'></h4>
+    <hr>
+    <p id='result'></p>
+    <hr>
+</div>
+
+</body>
+
+<!--行为-->
+<script>
+
+    $('.barBtn').attr('onmousemove', "this.className='barBtnOn'").attr('onmouseout', "this.className='barBtn'");
+
+    function pathFind() {
+        //构造路线导航类
+        var driving = new AMap.Driving({
+            map: map,
+            panel: "panel"
+        });
+        // 根据起终点经纬度规划驾车导航路线
+        driving.search(new AMap.LngLat(116.379028, 39.865042), new AMap.LngLat(116.427281, 39.903719), function (status, result) {
+            // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+            if (status === 'complete') {
+                log.success('绘制驾车路线完成')
+            } else {
+                log.error('获取驾车数据失败：' + result)
+            }
+        });
+    }
+</script>
+<!--引入-->
+<script type="text/javascript">
+    /*输入地点类型（0出发，1终点）*/
+    var pathType=-1;
+
+    $('#pathStart').click(function (){pathType=0});
+    $('#pathStartChoose').click(function (){pathType=-1});
+    $('#pathEnd').click(function (){pathType=1});
+    $('#pathEndChoose').click(function (){pathType=-1});
+
+
+    var map = new AMap.Map('container', {
+        resizeEnable: true, //是否监控地图容器尺寸变化
+        zoom: 11, //初始化地图层级
+    });
+
+    /*var toolbar = new AMap.ToolBar();
+    map.addControl(toolbar);
+    */
+
+    var marker = null;
+    var marker1 = null;
+    var origin="";
+    var destination="";
+    var lng=null;
+    var lng1=null;
+
+    map.on('click', function (ev) {
+
+        // 触发事件的对象
+        //var target = ev.target;
+        // 触发事件类型
+        //var type = ev.type;
+
+
+
+        if(pathType===0){
+            // 触发事件的地理坐标，AMap.LngLat 类型
+            var lnglat = ev.lnglat;
+            lng=lnglat;
+            //alert(lnglat);
+            var lnglatArr = lnglat.toString().split(",");
+
+            // 触发事件的像素坐标，AMap.Pixel 类型
+            var pixel = ev.pixel;
+            //alert(pixel);
+            var pixelArr = pixel.toString().split(",");
+            //删除点标记
+            if (marker) {
+                marker.setMap(null);
+                marker = null;
+            }
+            origin=lnglatArr[0]+","+lnglatArr[1];
+            // 实例化点标记
+            var icon = new AMap.Icon({
+                size: new AMap.Size(40, 50),    // 图标尺寸
+                image: 'https://webapi.amap.com/theme/v1.3/markers/b/start.png',  // Icon的图像
+                imageOffset: new AMap.Pixel(0, -60),  // 图像相对展示区域的偏移量，适于雪碧图等
+                imageSize: new AMap.Size(40, 50)   // 根据所设置的大小拉伸或压缩图片
+            });
+
+            // 创建一个 Icon
+            var startIcon = new AMap.Icon({
+                // 图标尺寸
+                size: new AMap.Size(25, 34),
+                // 图标的取图地址
+                image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png',
+                // 图标所用图片大小
+                imageSize: new AMap.Size(135, 40),
+                // 图标取图偏移量
+                imageOffset: new AMap.Pixel(-9, -3)
+            });
+
+            // 将 icon 传入 marker
+            marker = new AMap.Marker({
+                position: [lnglatArr[0], lnglatArr[1]],
+                icon: startIcon,
+                offset: new AMap.Pixel(-13, -30)
+            });
+            marker.setMap(map);
+        }else if (pathType===1){
+            // 触发事件的地理坐标，AMap.LngLat 类型
+            var lnglat1 = ev.lnglat;
+            lng1=lnglat1;
+            //alert(lnglat);
+            var lnglatArr1 = lnglat1.toString().split(",");
+
+            // 触发事件的像素坐标，AMap.Pixel 类型
+            var pixel1 = ev.pixel;
+            //alert(pixel);
+            var pixelArr1 = pixel1.toString().split(",");
+            //删除点标记
+            if (marker1) {
+                marker1.setMap(null);
+                marker1 = null;
+            }
+            destination=lnglatArr1[0]+","+lnglatArr1[1];
+
+
+            // 创建一个 icon
+            var endIcon = new AMap.Icon({
+                size: new AMap.Size(25, 34),
+                image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png',
+                imageSize: new AMap.Size(135, 40),
+                imageOffset: new AMap.Pixel(-95, -3)
+            });
+
+            // 将 icon 传入 marker
+            // 实例化点标记
+            marker1 = new AMap.Marker({
+                position: [lnglatArr1[0], lnglatArr1[1]],
+                icon: endIcon,
+                offset: new AMap.Pixel(-13, -30)
+            });
+            marker1.setMap(map);
+        }
+
+        //验证是否有值
+        if (origin!==""){
+            $('#pathStart').css("background","#baffcb")
+                .attr("onmousemove","this.style.backgroundColor='#cdfad8'")
+                .attr("onmouseout","this.style.backgroundColor='#baffcb'");
+
+            $('#pathStartChoose').css("background","#6ac779");
+        }
+        if (destination!==""){
+            $('#pathEnd').css("background","#baffcb")
+                .attr("onmousemove","this.style.backgroundColor='#cdfad8'")
+                .attr("onmouseout","this.style.backgroundColor='#baffcb'");
+
+            $('#pathEndChoose').css("background","#6ac779");
+        }
+
+    });
+
+    AMap.plugin('AMap.Geolocation', function () {
+        var geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+            timeout: 10000,          //超过10秒后停止定位，默认：5s
+            buttonPosition: 'RB',    //定位按钮的停靠位置
+            buttonOffset: new AMap.Pixel(-460, -460),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            zoomToAccuracy: true,   //定位成功后是否自动调整地图视野到定位点
+            height: 35,
+            width: 35,
+        });
+
+        map.addControl(geolocation);
+        geolocation.getCurrentPosition(function (status, result) {
+            if (status === 'complete') {
+                onComplete(result)
+            } else {
+                onError(result)
+            }
+        });
+    });
+
+    //解析定位结果
+    function onComplete(data) {
+        document.getElementById('status').innerHTML = '定位成功'
+        var str = [];
+        str.push('定位结果：' + data.position);
+        str.push('定位类别：' + data.location_type);
+        if (data.accuracy) {
+            str.push('精度：' + data.accuracy + ' 米');
+        }//如为IP精确定位结果则没有精度信息
+        str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+        document.getElementById('result').innerHTML = str.join('<br>');
+    }
+
+    //解析定位错误信息
+    function onError(data) {
+        document.getElementById('status').innerHTML = '定位失败'
+        document.getElementById('result').innerHTML = '失败原因排查信息:' + data.message;
+    }
+
+    // 获取搜索信息
+    function autoInput(){
+        var keywords = '北京大学';
+        AMap.plugin('AMap.PlaceSearch', function(){
+            var autoOptions = {
+                city: '全国'
+            }
+            var placeSearch = new AMap.PlaceSearch(autoOptions);
+            placeSearch.search(keywords, function(status, result) {
+                // 搜索成功时，result即是对应的匹配数据
+                var node = new PrettyJSON.view.Node({
+                    el: document.querySelector("#input-info"),
+                    data: result
+                });
+            })
+        })
+    }
+
+    //登陆状态验证
+    $(function () {
+        $.ajax({
+            type: "POST",
+
+            url: "user/check",
+
+            data: {},
+
+            dataType: "json",
+
+            success: function (data) {
+                if (data != null) {
+                    //是登陆状态
+                    $('#bar').attr('onclick', "document.getElementById('userBarOk').hidden=!document.getElementById('userBarOk').hidden");
+                    $('#userImg,#barImg').attr('src', data.img);
+                    $('#loginUsername').html("欢迎，" + data.username).style = "max-width:145px ;font-family:微软雅黑,sans-serif; font-size:20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;";
+                } else {
+                    //不是登陆状态
+                    $('#bar').attr('onclick', "if(document.getElementById('loginBar').hidden!=true){document.getElementById('userBarNo').hidden=true;document.getElementById('loginBar').hidden=true;} else{document.getElementById('userBarNo').hidden=!document.getElementById('userBarNo').hidden;}");
+                }
+            },
+            error: function () {
+                //检查登陆状态出错
+                $('#bar').attr('onclick', "if(document.getElementById('loginBar').hidden!=true){document.getElementById('userBarNo').hidden=true;document.getElementById('loginBar').hidden=true;} else{document.getElementById('userBarNo').hidden=!document.getElementById('userBarNo').hidden;}");
+            }
+
+
+        });
+    })
+
+    //登录
+    $('#loginBtn').click(function () {
+        $.ajax({
+            type: "POST",
+
+            url: "user/login",
+
+            data: {username: $('#username').val(), password: $('#password').val()},
+
+            dataType: "json",
+
+            success: function (data) {
+                if (data.username === null) {
+                    alert("用户名或密码错误");
+                } else {
+                    alert("登录成功");
+                    window.location = "http://localhost:8080/";
+                }
+            },
+
+            error: function () {
+                alert("登录出错！");
+            }
+
+
+        });
+    })
+
+    //注销
+    $('#logout').click(function () {
+        $.post("user/logout");
+        window.location = "http://localhost:8080/";
+    })
+
+    //搜索
+    $('#searchWays').click(function (){
+
+        if (marker) {
+            marker.setMap(null);
+        }
+        if (marker1) {
+            marker1.setMap(null);
+        }
+        //构造路线导航类
+        var transfer = new AMap.Transfer({
+            map: map,
+            panel: "panel",
+            city: "天津"
+        });
+        // 根据起终点经纬度规划驾车导航路线
+        transfer.search(lng, lng1, function(status, result) {
+            // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
+            if (status === 'complete') {
+                alert(result);
+            } else {
+                alert('获取驾车数据失败：' + result);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+
+            url: "way/getWay",
+
+            data: {origin: origin, destination: destination},
+
+            dataType: "json",
+
+            success: function (data) {
+                alert($.parseJSON(data));
+            },
+
+            error: function () {
+                alert("出现错误!");
+            }
+
+
+        });
+
+
+    });
+
+</script>
+</html>
