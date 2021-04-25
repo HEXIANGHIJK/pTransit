@@ -42,9 +42,18 @@ public class UserController {
         return ResponseEntity.ok(null);
     }
 
+    /*
+        try {
+            User temporarilyUser = (User) session.getAttribute("temporarilyUser");
+        }catch (Exception e){
+            System.out.println("temporarilyUser is not exist");
+        }
+    */
+
     @PostMapping("/login")
     public ResponseEntity<User> login(HttpServletRequest request,String username,String password){
         HttpSession session = request.getSession();
+
         User user = userService.findByUsername(username);
         System.out.println(user);
         if (user==null)
@@ -60,6 +69,14 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(HttpServletRequest request,String username,String password){
+        User user=new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        User returnUser = userService.insertUser(user);
+        HttpSession session = request.getSession();
+        if (returnUser!=null){
+            session.setAttribute("temporarilyUser",user);
+        }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }
