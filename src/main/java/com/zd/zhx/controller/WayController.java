@@ -50,10 +50,10 @@ public class WayController {
 
         String str = apiService.httpRequest(api);
 
-        String s = str.replaceAll("\\[]", "{}");
+        String s = str.replaceAll("\\[]", "null");
         //System.out.println(s);
         Way way = jsonToWay(s);
-        System.out.println(str);
+        System.out.println(way.getRoute().getTransits().get(0).getSegments().get(0).getWalking().getSteps().get(5));
         /*Way way= (Way) str2Bean(str, Way.class);
 
         System.out.println(way);
@@ -71,8 +71,7 @@ public class WayController {
 
     public Way jsonToWay(String str) throws JsonProcessingException {
         MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return MAPPER.readValue(str, new TypeReference<Way>() {
-        });
+        return MAPPER.readValue(str, Way.class);
     }
 
     public Object str2Bean(String jsonStr, Class<?> clazz) {
