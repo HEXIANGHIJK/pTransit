@@ -13,6 +13,6 @@ public class Walking implements Serializable {
     private String destination;
     private String distance;
     private String duration;
-    //private List<Step> steps;
+    private List<Step> steps;
 
 }

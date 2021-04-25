@@ -53,6 +53,7 @@ public class WayController {
         String s = str.replaceAll("\\[]", "{}");
         //System.out.println(s);
         Way way = jsonToWay(s);
+        System.out.println(str);
         /*Way way= (Way) str2Bean(str, Way.class);
 
         System.out.println(way);
