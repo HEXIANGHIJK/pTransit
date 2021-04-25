@@ -27,4 +27,14 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
+    @Override
+    public Double getUserSpeed(User user) {
+        return userMapper.getUserSpeed(user.getUsername());
+    }
+
+    @Override
+    public Double getUserSpeed(String username) {
+        return userMapper.getUserSpeed(username);
+    }
 }

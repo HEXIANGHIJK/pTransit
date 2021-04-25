@@ -7,4 +7,8 @@ public interface UserService {
     public User findByUsername(String username);
 
     public User insertUser(User user);
+
+    public Double getUserSpeed(User user);
+    public Double getUserSpeed(String username);
+
 }
