@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -36,19 +37,26 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    @GetMapping("/temCheck")
+    public ResponseEntity<User> checktempUser(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        try {
+            User temporarilyUser = (User) session.getAttribute("temporarilyUser");
+            if (temporarilyUser!=null){
+                return ResponseEntity.ok(temporarilyUser);
+            }
+            return ResponseEntity.ok(null);
+        }catch (Exception e){
+            System.out.println("temporarilyUser is not exist");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request){
         request.getSession().invalidate();
         return ResponseEntity.ok(null);
     }
-
-    /*
-        try {
-            User temporarilyUser = (User) session.getAttribute("temporarilyUser");
-        }catch (Exception e){
-            System.out.println("temporarilyUser is not exist");
-        }
-    */
 
     @PostMapping("/login")
     public ResponseEntity<User> login(HttpServletRequest request,String username,String password){
