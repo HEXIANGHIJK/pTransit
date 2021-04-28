@@ -370,18 +370,20 @@
         z-index: 999;
         border-left: 1px solid #eaeaea;
         background: #fff;">
-    <div style="display: flex;height: 70px;width: 100%; background-color: #e7e7e7; border-bottom: #979797 1px solid">
+    <div style="display: flex;height: 70px;width: 100%; background-color: #e7e7e7; border-bottom: #979797 1px solid; justify-content: center;">
         <div style="display: flex;flex-direction: column;justify-content: center">
             <input type="text" placeholder="选择出发地"
                    id="pathStart"
                    style="border-radius: 5px;height: 30px;width: 180px;background-color: #91d0fd;margin:2px"
                    onfocus="this.style.backgroundColor='#a2d3ff'"
-                   onfocusout="this.style.backgroundColor='#91d0fd'">
+                   onfocusout="this.style.backgroundColor='#91d0fd'"
+                   oninput="searchPlace(this.value)">
             <input type="text" value="选择目的地"
                    id="pathEnd"
                    style="border-radius: 5px;height: 30px;width: 180px;background-color: #91d0fd;margin:2px"
                    onfocus="this.style.backgroundColor='#a2d3ff'"
-                   onfocusout="this.style.backgroundColor='#91d0fd'">
+                   onfocusout="this.style.backgroundColor='#91d0fd'"
+                   oninput="searchPlace(this.value)">
         </div>
         <div style="display: flex; align-items: center">
             <div style="height: 68px;width: 30px; display: flex;align-items: center;margin-left: 5px;">
@@ -395,8 +397,8 @@
                    style="border-radius: 5px;height: 56px;width: 64px;background-color: #ffebb9;margin: 2px 5px">
         </div>
     </div>
-    <div id="panel" style="max-height: 427px;width: auto;">
-
+    <div id="panel" style="max-height: 427px;width: auto; position: relative">
+        <div style="position: absolute;top: 70px;" id="searchPlace"></div>
     </div>
 </div>
 <script src="//webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
@@ -690,21 +692,19 @@
         document.getElementById('result').innerHTML = '失败原因排查信息:' + data.message;
     }
 
-    // 获取搜索信息
-    function autoInput() {
-        var keywords = '北京大学';
-        AMap.plugin('AMap.PlaceSearch', function () {
-            var autoOptions = {
-                city: '全国'
+    //地点查询
+    function searchPlace(keywords){
+        $.ajax({
+            type: "GET",
+            url: "//restapi.amap.com/v3/assistant/inputtips?key=d5a0350fba816f16ff15e1c9c7b7ecf9",
+            data: {keywords: keywords,city: "天津"},
+            dataType: "json",
+            success: function (data) {
+                alert(data);
+            },
+            error: function () {
+                alert("查找出错")
             }
-            var placeSearch = new AMap.PlaceSearch(autoOptions);
-            placeSearch.search(keywords, function (status, result) {
-                // 搜索成功时，result即是对应的匹配数据
-                var node = new PrettyJSON.view.Node({
-                    el: document.querySelector("#input-info"),
-                    data: result
-                });
-            })
         })
     }
 
