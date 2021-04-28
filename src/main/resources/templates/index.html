@@ -8,11 +8,11 @@
     <style>
         html,
         body,
-        div,
         #container {
             width: 100%;
             height: 100%;
         }
+
     </style>
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
     <!--引入jQuery-->
@@ -119,21 +119,6 @@
         width: 100%;
     }
 
-    #panel {
-        position: absolute;
-        top: 61px;
-        bottom: 0;
-        left: 0;
-        height: 500px;
-        overflow: auto;
-        width: 300px;
-        z-index: 999;
-        border-left: 1px solid #eaeaea;
-        background: #fff;
-        border-style: solid;
-        border-width: 2px;
-    }
-
     #searchBar {
         height: 30px;
         background: #ccc;
@@ -191,164 +176,156 @@
     }
 </style>
 
-<body style="background-color: #f5f5dc33">
+<body style="background-color: #f5f5dc33; display: flex;">
 
-<!--头部-->
-<div style="background-color: #90d8ff; height: 50px"><!--导航栏-->
-
-    <!--用户栏-->
+<!--用户栏-->
+<div style="z-index: 1000; position: absolute; top: 10px; right: 10px; height: 60px; width: 60px;">
     <div id="bar"
-         style="float: right;width: 60px; background-color: #84c5e8"
+         style="border-radius: 30px; height: 60px; width: 60px; background-color: #84c5e8"
          onmousemove="this.style.backgroundColor='#90cfff'"
          onmouseout="this.style.backgroundColor='#84c5e8'"
          onclick="">
         <div>
-            <img id="barImg" src="img/unLogin.png" style="border-radius: 30px;width:50px;height:50px;margin-left: 5px;"
-                 alt=""/>
+            <img id="barImg" src="img/unLogin.png" style="border-radius: 30px;width:56px;height:56px; margin: 2px;" alt=""/>
+        </div>
+
+
+    </div>
+    <!--已登录登录栏-->
+    <div id="userBarOk" hidden="hidden"
+         style="transform: translate(-62%,0%); position:absolute; float:right; height: 247px;width: 160px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#a6dffdaa, #a6dffdaa);">
+        <!--内容-->
+        <div style="height: 240px;width: 157px; margin-top: 2px; margin-left: 2px; background-color: #8ebed7; border-radius: 5px;">
+            <div style="background-color: #a6dffd;height: 140px;border-radius: 5px;">
+                <!--头像-->
+                <div style="margin: 0 auto;height: 100px;width: 147px;background-color: #a6dffd;border-radius: 5px;">
+                    <img id="userImg" src="img/unLogin.png"
+                         style="border-radius: 40px;width:80px;height:80px;margin-left: 35px; margin-top: 20px;"
+                         alt=""/>
+                </div>
+
+                <!--用户名-->
+                <div style="text-align: center; height:40px ;max-width:147px ;background-color: #a6dffd;border-radius: 2px;">
+                    <a style="" id="loginUsername"></a>
+                </div>
+            </div>
+
+            <!--分割线-->
+            <div class="barLine"></div>
+
+            <div class="barBtn" id="userDetail">
+                <a class="barText">个人信息</a>
+            </div>
+
+            <!--分割线-->
+            <div class="barLine"></div>
+
+            <div class="barBtn" id="favorites">
+                <a class="barText">收藏</a>
+            </div>
+
+            <!--分割线-->
+            <div class="barLine"></div>
+
+            <div class="barBtn" id="history">
+                <a class="barText">历史记录</a>
+            </div>
+
+            <!--分割线-->
+            <div class="barLine"></div>
+
+            <div class="barBtn" id="logout">
+                <a class="barText">注销</a>
+            </div>
+
         </div>
     </div>
-</div><!--导航栏-->
 
-<!--渐变过渡条-->
-<div style="background-image: linear-gradient(#90d8ff, #00000088);height: 1px"></div>
-<!--已登录登录栏-->
-<div id="userBarOk" hidden="hidden"
-     style="float:right; height: 247px;width: 160px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#a6dffdaa, #a6dffdaa);">
-    <!--内容-->
-    <div style="height: 240px;width: 157px; margin-top: 2px; margin-left: 2px; background-color: #8ebed7; border-radius: 5px;">
-        <div style="background-color: #a6dffd;height: 140px;border-radius: 5px;">
+    <!--未登录登录栏-->
+    <div id="userBarNo" hidden="hidden"
+         style="transform: translate(-62%,0%); position:absolute; float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
+        <!--内容-->
+        <div style="height: 145px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
             <!--头像-->
-            <div style="margin: 0 auto;height: 100px;width: 147px;background-color: #a6dffd;border-radius: 5px;">
-                <img id="userImg" src="img/unLogin.png"
+            <div style="margin: 0 auto;height: 120px;width: 147px;background-color: #979797">
+                <img src="img/unLogin.png"
                      style="border-radius: 40px;width:80px;height:80px;margin-left: 35px; margin-top: 20px;"
                      alt=""/>
             </div>
-
-            <!--用户名-->
-            <div style="text-align: center; height:40px ;max-width:147px ;background-color: #a6dffd;border-radius: 2px;">
-                <a style="" id="loginUsername"></a>
-            </div>
-        </div>
-
-        <!--分割线-->
-        <div class="barLine"></div>
-
-        <div class="barBtn" id="userDetail">
-            <a class="barText">个人信息</a>
-        </div>
-
-        <!--分割线-->
-        <div class="barLine"></div>
-
-        <div class="barBtn" id="favorites">
-            <a class="barText">收藏</a>
-        </div>
-
-        <!--分割线-->
-        <div class="barLine"></div>
-
-        <div class="barBtn" id="history">
-            <a class="barText">历史记录</a>
-        </div>
-
-        <!--分割线-->
-        <div class="barLine"></div>
-
-        <div class="barBtn" id="logout">
-            <a class="barText">注销</a>
-        </div>
-
-    </div>
-</div>
-
-<!--未登录登录栏-->
-<div id="userBarNo" hidden="hidden"
-     style="float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
-    <!--内容-->
-    <div style="height: 145px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
-        <!--头像-->
-        <div style="margin: 0 auto;height: 120px;width: 147px;background-color: #979797">
-            <img src="img/unLogin.png"
-                 style="border-radius: 40px;width:80px;height:80px;margin-left: 35px; margin-top: 20px;"
-                 alt=""/>
-        </div>
-        <div class="lgBarBtn"
-             onmousemove="this.style.backgroundColor='#d5d5d5'" onmouseout="this.style.backgroundColor='#c1c1c1'"
-             id="inLogin" onclick="document.getElementById('loginBar').hidden=!document.getElementById('loginBar').hidden;
+            <div class="lgBarBtn"
+                 onmousemove="this.style.backgroundColor='#d5d5d5'" onmouseout="this.style.backgroundColor='#c1c1c1'"
+                 id="inLogin" onclick="document.getElementById('loginBar').hidden=!document.getElementById('loginBar').hidden;
                                     document.getElementById('userBarNo').hidden='hidden'">
-            <a class="barText" onclick="temCheck()">登录</a>
-        </div>
-        <div class="lgBarBtn"
-             onmousemove="this.style.backgroundColor='#d5d5d5'" onmouseout="this.style.backgroundColor='#c1c1c1'"
-             id="inRegister" onclick="document.getElementById('registerBar').hidden=!document.getElementById('registerBar').hidden;
+                <a class="barText" onclick="temCheck()">登录</a>
+            </div>
+            <div class="lgBarBtn"
+                 onmousemove="this.style.backgroundColor='#d5d5d5'" onmouseout="this.style.backgroundColor='#c1c1c1'"
+                 id="inRegister" onclick="document.getElementById('registerBar').hidden=!document.getElementById('registerBar').hidden;
                                     document.getElementById('userBarNo').hidden=true">
-            <a class="barText">注册</a>
+                <a class="barText">注册</a>
+            </div>
+        </div>
+    </div>
+
+    <!--登录窗口-->
+    <div id="loginBar" hidden="hidden"
+         style="transform: translate(-62%,0%); position:absolute; float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
+        <!--内容-->
+        <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
+            <form action="/login">
+                <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
+                    <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; font-weight: bold">登录</a>
+                </div>
+                <div class="lgBarBtnLeft"><a class="barText">用户名</a></div>
+                <input type="text" name="username" id="username"
+                       style="outline-style: none; border: 0; height: 30px; width: 147px;">
+                <div class="lgBarBtnLeft"><a class="barText">密码</a></div>
+                <input type="password" name="password" id="password"
+                       style="outline-style: none; border: 0; height: 30px; width: 147px; padding: 4.5px 9px;">
+                <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
+                     onmousemove="this.style.backgroundColor='#c0ffe7'"
+                     onmouseout="this.style.backgroundColor='#daffed'"
+                     id="loginBtn">
+                    <a class="barText">登录</a></div>
+                <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
+                <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
+                     onmousemove="this.style.backgroundColor='#e7e7e7'"
+                     onmouseout="this.style.backgroundColor='#f5f5f5'"
+                     onclick="document.getElementById('loginBar').hidden=true;document.getElementById('userBarNo').hidden=false">
+                    <a class="barText">返回</a></div>
+            </form>
+        </div>
+    </div>
+
+    <!--注册窗口-->
+    <div id="registerBar" hidden="hidden"
+         style="transform: translate(-62%,0%); position:absolute; float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
+        <!--内容-->
+        <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
+            <form action="/login">
+                <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
+                    <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; font-weight: bold">注册</a>
+                </div>
+                <div class="lgBarBtnLeft"><a class="barText">用户名</a></div>
+                <input type="text" name="username" id="rUsername"
+                       style="outline-style: none; border: 0; height: 30px; width: 147px;">
+                <div class="lgBarBtnLeft"><a class="barText">密码</a></div>
+                <input type="password" name="password" id="rPassword"
+                       style="outline-style: none; border: 0; height: 30px; width: 147px; padding: 4.5px 9px;">
+                <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
+                     onmousemove="this.style.backgroundColor='#c0ffe7'" onmouseout="this.style.backgroundColor='#daffed'"
+                     id="registerBtn">
+                    <a class="barText" onclick="register()">注册</a></div>
+                <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
+                <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
+                     onmousemove="this.style.backgroundColor='#e7e7e7'" onmouseout="this.style.backgroundColor='#f5f5f5'"
+                     onclick="document.getElementById('registerBar').hidden=true;document.getElementById('userBarNo').hidden=false">
+                    <a class="barText">返回</a></div>
+            </form>
         </div>
     </div>
 </div>
-
-<!--登录窗口-->
-<div id="loginBar" hidden="hidden"
-     style="float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
-    <!--内容-->
-    <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
-        <form action="/login">
-            <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
-                <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; font-weight: bold">登录</a>
-            </div>
-            <div class="lgBarBtnLeft"><a class="barText">用户名</a></div>
-            <input type="text" name="username" id="username"
-                   style="outline-style: none; border: 0; height: 30px; width: 147px;">
-            <div class="lgBarBtnLeft"><a class="barText">密码</a></div>
-            <input type="password" name="password" id="password"
-                   style="outline-style: none; border: 0; height: 30px; width: 147px; padding: 4.5px 9px;">
-            <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
-                 onmousemove="this.style.backgroundColor='#c0ffe7'" onmouseout="this.style.backgroundColor='#daffed'"
-                 id="loginBtn">
-                <a class="barText">登录</a></div>
-            <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
-            <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
-                 onmousemove="this.style.backgroundColor='#e7e7e7'" onmouseout="this.style.backgroundColor='#f5f5f5'"
-                 onclick="document.getElementById('loginBar').hidden=true;document.getElementById('userBarNo').hidden=false">
-                <a class="barText">返回</a></div>
-        </form>
-    </div>
-</div>
-
-
-<!--注册窗口-->
-<div id="registerBar" hidden="hidden"
-     style="float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
-    <!--内容-->
-    <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
-        <form action="/login">
-            <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
-            <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; font-weight: bold">注册</a>
-            </div>
-            <div class="lgBarBtnLeft"><a class="barText">用户名</a></div>
-            <input type="text" name="username" id="rUsername"
-                   style="outline-style: none; border: 0; height: 30px; width: 147px;">
-            <div class="lgBarBtnLeft"><a class="barText">密码</a></div>
-            <input type="password" name="password" id="rPassword"
-                   style="outline-style: none; border: 0; height: 30px; width: 147px; padding: 4.5px 9px;">
-            <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
-                 onmousemove="this.style.backgroundColor='#c0ffe7'" onmouseout="this.style.backgroundColor='#daffed'"
-                 id="registerBtn">
-                <a class="barText" onclick="register()">注册</a></div>
-            <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
-            <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
-                 onmousemove="this.style.backgroundColor='#e7e7e7'" onmouseout="this.style.backgroundColor='#f5f5f5'"
-                 onclick="document.getElementById('registerBar').hidden=true;document.getElementById('userBarNo').hidden=false">
-                <a class="barText">返回</a></div>
-        </form>
-    </div>
-</div>
-
-
-<!--阴影-->
-<div style="background-image: linear-gradient(#00000088, #ffffff00);height: 10px"></div><!--阴影-->
-
-<!--地点选择框-->
+<!--!!地点选择框-->
 <!--<div id="panel" class="scrollbar1">
     <div >
         <table id="searchBar">
@@ -385,35 +362,41 @@
 
 
 <!--地点选择-->
-<div id="panel" class="scrollbar">
-    <div>
-        <input type="button" value="选择出发地"
-               id="pathStart"
-               style="border-radius: 5px;height: 30px;width: 100px;background-color: #91d0fd"
-               onmousemove="this.style.backgroundColor='#91c4e2'"
-               onmouseout="this.style.backgroundColor='#91d0fd'"
-               onclick="this.hidden=true;document.getElementById('pathStartChoose').hidden=false;
-                           if (document.getElementById('pathEndChoose').hidden===false){document.getElementById('pathEndChoose').hidden=true;document.getElementById('pathEnd').hidden=false}">
-        <input type="button" value="选择出发地"
-               id="pathStartChoose"
-               hidden
-               style="border-radius: 5px;height: 30px;width: 100px;background-color: #5f9ed7"
-               onclick="this.hidden=true;document.getElementById('pathStart').hidden=false">
-        <input type="button" value="选择目的地"
-               id="pathEnd"
-               style="border-radius: 5px;height: 30px;width: 100px;background-color: #91d0fd"
-               onmousemove="this.style.backgroundColor='#91c4e2'"
-               onmouseout="this.style.backgroundColor='#91d0fd'"
-               onclick="this.hidden=true;document.getElementById('pathEndChoose').hidden=false
-                            if (document.getElementById('pathStartChoose').hidden===false){document.getElementById('pathStartChoose').hidden=true;document.getElementById('pathStart').hidden=false}">
-        <input type="button" value="选择目的地"
-               id="pathEndChoose"
-               hidden
-               style="border-radius: 5px;height: 30px;width: 100px;background-color: #5f9ed7"
-               onclick="this.hidden=true;document.getElementById('pathEnd').hidden=false;">
-        <input type="button" value="搜索"
-               id="searchWays"
-               style="border-radius: 5px;height: 30px;width: 100px;background-color: #ffebb9">
+<div class="scrollbar" style="display: flex;
+        flex-direction: column;
+        height: auto;
+        overflow: auto;
+        width: 25%;
+        z-index: 999;
+        border-left: 1px solid #eaeaea;
+        background: #fff;">
+    <div style="display: flex;height: 70px;width: 100%; background-color: #e7e7e7; border-bottom: #979797 1px solid">
+        <div style="display: flex;flex-direction: column;justify-content: center">
+            <input type="text" placeholder="选择出发地"
+                   id="pathStart"
+                   style="border-radius: 5px;height: 30px;width: 180px;background-color: #91d0fd;margin:2px"
+                   onfocus="this.style.backgroundColor='#a2d3ff'"
+                   onfocusout="this.style.backgroundColor='#91d0fd'">
+            <input type="text" value="选择目的地"
+                   id="pathEnd"
+                   style="border-radius: 5px;height: 30px;width: 180px;background-color: #91d0fd;margin:2px"
+                   onfocus="this.style.backgroundColor='#a2d3ff'"
+                   onfocusout="this.style.backgroundColor='#91d0fd'">
+        </div>
+        <div style="display: flex; align-items: center">
+            <div style="height: 68px;width: 30px; display: flex;align-items: center;margin-left: 5px;">
+
+                <input type="button" value="⇵"
+                       id="changeWays"
+                       style="border-radius: 5px;height: 30px;width: 30px;background-color: #fff4e0">
+            </div>
+            <input type="button" value="搜索"
+                   id="searchWays"
+                   style="border-radius: 5px;height: 56px;width: 64px;background-color: #ffebb9;margin: 2px 5px">
+        </div>
+    </div>
+    <div id="panel" style="max-height: 427px;width: auto;">
+
     </div>
 </div>
 <script src="//webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
@@ -487,10 +470,11 @@
 </script>
 
 <!--地图框-->
-<div style="border-style:solid; border-width:2px; width: 500px; height: 500px; position: absolute; left: 300px"
-     id="mapBorder">
+<div style="z-index: 500; border-left: 1px solid gray; width: 75%; height: 100%;" id="mapBorder">
     <!-- 加载地图JSAPI脚本 -->
     <div id="container"></div>
+
+
 </div>
 
 <!--触发自动定位-->
@@ -529,12 +513,15 @@
 <script src="https://code.jquery.com/jquery-2.2.3.js" type="text/javascript"></script>
 <script type="text/javascript">
     /*输入地点类型（0出发，1终点）*/
-    var pathType=-1;
+    var pathType = -1;
 
-    $('#pathStart').click(function (){pathType=0});
-    $('#pathStartChoose').click(function (){pathType=-1});
-    $('#pathEnd').click(function (){pathType=1});
-    $('#pathEndChoose').click(function (){pathType=-1});
+    $('#pathStart').focus(function () {
+        pathType = 0
+    });
+
+    $('#pathEnd').focus(function () {
+        pathType = 1
+    });
 
 
     var map = new AMap.Map('container', {
@@ -548,11 +535,12 @@
 
     var marker = null;
     var marker1 = null;
-    var origin="";
-    var destination="";
-    var lng=null;
-    var lng1=null;
+    var origin = "";
+    var destination = "";
+    var lng = null;
+    var lng1 = null;
 
+    //地图点击触发
     map.on('click', function (ev) {
 
         // 触发事件的对象
@@ -561,11 +549,11 @@
         //var type = ev.type;
 
 
-
-        if(pathType===0){
+        if (pathType === 0) {
+            pathType = -1;
             // 触发事件的地理坐标，AMap.LngLat 类型
             var lnglat = ev.lnglat;
-            lng=lnglat;
+            lng = lnglat;
             //alert(lnglat);
             var lnglatArr = lnglat.toString().split(",");
 
@@ -578,7 +566,7 @@
                 marker.setMap(null);
                 marker = null;
             }
-            origin=lnglatArr[0]+","+lnglatArr[1];
+            origin = lnglatArr[0] + "," + lnglatArr[1];
             // 实例化点标记
             var icon = new AMap.Icon({
                 size: new AMap.Size(40, 50),    // 图标尺寸
@@ -606,10 +594,11 @@
                 offset: new AMap.Pixel(-13, -30)
             });
             marker.setMap(map);
-        }else if (pathType===1){
+        } else if (pathType === 1) {
+            pathType = -1;
             // 触发事件的地理坐标，AMap.LngLat 类型
             var lnglat1 = ev.lnglat;
-            lng1=lnglat1;
+            lng1 = lnglat1;
             //alert(lnglat);
             var lnglatArr1 = lnglat1.toString().split(",");
 
@@ -622,7 +611,7 @@
                 marker1.setMap(null);
                 marker1 = null;
             }
-            destination=lnglatArr1[0]+","+lnglatArr1[1];
+            destination = lnglatArr1[0] + "," + lnglatArr1[1];
 
 
             // 创建一个 icon
@@ -643,20 +632,21 @@
             marker1.setMap(map);
         }
 
+
         //验证是否有值
-        if (origin!==""){
-            $('#pathStart').css("background","#baffcb")
-                .attr("onmousemove","this.style.backgroundColor='#cdfad8'")
-                .attr("onmouseout","this.style.backgroundColor='#baffcb'");
+        if (origin !== "") {
+            $('#pathStart').css("background", "#baffcb")
+                .attr("onmousemove", "this.style.backgroundColor='#cdfad8'")
+                .attr("onmouseout", "this.style.backgroundColor='#baffcb'");
 
-            $('#pathStartChoose').css("background","#6ac779");
+            $('#pathStartChoose').css("background", "#6ac779");
         }
-        if (destination!==""){
-            $('#pathEnd').css("background","#baffcb")
-                .attr("onmousemove","this.style.backgroundColor='#cdfad8'")
-                .attr("onmouseout","this.style.backgroundColor='#baffcb'");
+        if (destination !== "") {
+            $('#pathEnd').css("background", "#baffcb")
+                .attr("onmousemove", "this.style.backgroundColor='#cdfad8'")
+                .attr("onmouseout", "this.style.backgroundColor='#baffcb'");
 
-            $('#pathEndChoose').css("background","#6ac779");
+            $('#pathEndChoose').css("background", "#6ac779");
         }
 
     });
@@ -666,13 +656,12 @@
             enableHighAccuracy: true,//是否使用高精度定位，默认:true
             timeout: 10000,          //超过10秒后停止定位，默认：5s
             buttonPosition: 'RB',    //定位按钮的停靠位置
-            buttonOffset: new AMap.Pixel(-460, -460),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            buttonOffset: new AMap.Pixel(2,2),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
             zoomToAccuracy: true,   //定位成功后是否自动调整地图视野到定位点
-            height: 35,
-            width: 35,
+
         });
 
-        map.addControl(geolocation);
+        map.addControl(geolocation,"right-bottom");
         geolocation.getCurrentPosition(function (status, result) {
             if (status === 'complete') {
                 onComplete(result)
@@ -702,14 +691,14 @@
     }
 
     // 获取搜索信息
-    function autoInput(){
+    function autoInput() {
         var keywords = '北京大学';
-        AMap.plugin('AMap.PlaceSearch', function(){
+        AMap.plugin('AMap.PlaceSearch', function () {
             var autoOptions = {
                 city: '全国'
             }
             var placeSearch = new AMap.PlaceSearch(autoOptions);
-            placeSearch.search(keywords, function(status, result) {
+            placeSearch.search(keywords, function (status, result) {
                 // 搜索成功时，result即是对应的匹配数据
                 var node = new PrettyJSON.view.Node({
                     el: document.querySelector("#input-info"),
@@ -720,34 +709,34 @@
     }
 
     //注册操作
-    function register(){
+    function register() {
         $.ajax({
             type: "POST",
             url: "user/register",
-            data:{username: $('#rUsername').val(), password: $('#rPassword').val()},
-            dataType:"json",
-            success: function (data){
-                if (data!==null||data!=="null"){
+            data: {username: $('#rUsername').val(), password: $('#rPassword').val()},
+            dataType: "json",
+            success: function (data) {
+                if (data !== null || data !== "null") {
                     alert("注册成功！");
                     temCheck();
                     //$('#registerBar').attr("hidden","true");
-                    document.getElementById('registerBar').hidden=true;
+                    document.getElementById('registerBar').hidden = true;
                     //$('#loginBar').attr("hidden","false");
-                    document.getElementById('loginBar').hidden=false;
-                }else {
+                    document.getElementById('loginBar').hidden = false;
+                } else {
                     alert("该用户已存在！");
                 }
             },
-            error:function (){
+            error: function () {
                 alert("该用户已存在！");
-                document.getElementById('rUsername').innerHTML="";
-                document.getElementById('rPassword').innerHTML="";
+                document.getElementById('rUsername').innerHTML = "";
+                document.getElementById('rPassword').innerHTML = "";
             }
         })
     }
 
     //伪登录名验证
-    function temCheck(){
+    function temCheck() {
         $.ajax({
             type: "GET",
 
@@ -760,8 +749,8 @@
             success: function (data) {
                 if (data != null) {
                     //存在伪登陆信息
-                    $('#username').attr("value",data.username);
-                    $('#password').attr("value",data.password);
+                    $('#username').attr("value", data.username);
+                    $('#password').attr("value", data.password);
                 }
             },
             error: function () {
@@ -839,7 +828,7 @@
     })
 
     //搜索
-    $('#searchWays').click(function (){
+    $('#searchWays').click(function () {
 
         if (marker) {
             marker.setMap(null);
@@ -854,7 +843,7 @@
             city: "天津"
         });
         // 根据起终点经纬度规划驾车导航路线
-        transfer.search(lng, lng1, function(status, result) {
+        transfer.search(lng, lng1, function (status, result) {
             // result 即是对应的驾车导航信息，相关数据结构文档请参考  https://lbs.amap.com/api/javascript-api/reference/route-search#m_DrivingResult
             if (status === 'complete') {
                 alert(result);
