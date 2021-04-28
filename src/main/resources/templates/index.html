@@ -398,7 +398,9 @@
         </div>
     </div>
     <div id="panel" style="max-height: 427px;width: auto; position: relative">
-        <div style="position: absolute;top: 70px;" id="searchPlace"></div>
+        <div style="position: absolute; display: flex; flex-direction: column; justify-content: flex-start;align-items: center; width: 100%" id="searchPlace">
+
+        </div>
     </div>
 </div>
 <script src="//webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
@@ -696,11 +698,15 @@
     function searchPlace(keywords){
         $.ajax({
             type: "GET",
-            url: "//restapi.amap.com/v3/assistant/inputtips?key=d5a0350fba816f16ff15e1c9c7b7ecf9",
+            url: "//restapi.amap.com/v3/assistant/inputtips?key=056d5aa58b7bb9c02c21d4f61305e3bf",
             data: {keywords: keywords,city: "天津"},
             dataType: "json",
             success: function (data) {
-                alert(data);
+                var searches="";
+                for (var i=0;i<data.count;i++){
+                    searches+="<div style=\"width: 100%; height: 100%; padding: 2px; border-bottom: 1px solid #a3a3a3;display: flex;flex-direction: column;\" onmouseover=\"this.style.backgroundColor='#f0f0f0'\"onmouseout=\"this.style.backgroundColor='#ffffff'\"onclick=\"getThisLoc("+i+")\"><span style=\"font-size: 16px;font-weight: 700;margin-left: 10px\">"+data.tips[i].name+"</span><span style=\"margin-left: 10px;font-size:14px; color: #a3a3a3\">"+data.tips[i].address+"</span></div>"
+                }
+                $("#searchPlace").html(searches);
             },
             error: function () {
                 alert("查找出错")
