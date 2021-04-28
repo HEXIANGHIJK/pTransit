@@ -276,7 +276,7 @@
              onmousemove="this.style.backgroundColor='#d5d5d5'" onmouseout="this.style.backgroundColor='#c1c1c1'"
              id="inLogin" onclick="document.getElementById('loginBar').hidden=!document.getElementById('loginBar').hidden;
                                     document.getElementById('userBarNo').hidden='hidden'">
-            <a class="barText">登录</a>
+            <a class="barText" onclick="temCheck()">登录</a>
         </div>
         <div class="lgBarBtn"
              onmousemove="this.style.backgroundColor='#d5d5d5'" onmouseout="this.style.backgroundColor='#c1c1c1'"
@@ -334,7 +334,7 @@
             <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
                  onmousemove="this.style.backgroundColor='#c0ffe7'" onmouseout="this.style.backgroundColor='#daffed'"
                  id="registerBtn">
-                <a class="barText">注册</a></div>
+                <a class="barText" onclick="register()">注册</a></div>
             <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
             <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
                  onmousemove="this.style.backgroundColor='#e7e7e7'" onmouseout="this.style.backgroundColor='#f5f5f5'"
@@ -526,6 +526,7 @@
     }
 </script>
 <!--引入-->
+<script src="https://code.jquery.com/jquery-2.2.3.js" type="text/javascript"></script>
 <script type="text/javascript">
     /*输入地点类型（0出发，1终点）*/
     var pathType=-1;
@@ -716,6 +717,60 @@
                 });
             })
         })
+    }
+
+    //注册操作
+    function register(){
+        $.ajax({
+            type: "POST",
+            url: "user/register",
+            data:{username: $('#rUsername').val(), password: $('#rPassword').val()},
+            dataType:"json",
+            success: function (data){
+                if (data!==null||data!=="null"){
+                    alert("注册成功！");
+                    temCheck();
+                    //$('#registerBar').attr("hidden","true");
+                    document.getElementById('registerBar').hidden=true;
+                    //$('#loginBar').attr("hidden","false");
+                    document.getElementById('loginBar').hidden=false;
+                }else {
+                    alert("该用户已存在！");
+                }
+            },
+            error:function (){
+                alert("该用户已存在！");
+                document.getElementById('rUsername').innerHTML="";
+                document.getElementById('rPassword').innerHTML="";
+            }
+        })
+    }
+
+    //伪登录名验证
+    function temCheck(){
+        $.ajax({
+            type: "GET",
+
+            url: "user/temCheck",
+
+            data: {},
+
+            dataType: "json",
+
+            success: function (data) {
+                if (data != null) {
+                    //存在伪登陆信息
+                    $('#username').attr("value",data.username);
+                    $('#password').attr("value",data.password);
+                }
+            },
+            error: function () {
+
+
+            }
+
+
+        });
     }
 
     //登陆状态验证
