@@ -9,12 +9,15 @@ import com.zd.zhx.pojo.Transit;
 import com.zd.zhx.pojo.Walking;
 import com.zd.zhx.pojo.Way;
 import com.zd.zhx.service.ApiService;
+import com.zd.zhx.service.WayService;
 import com.zd.zhx.utils.JsonUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.thymeleaf.util.StringUtils;
@@ -32,6 +35,9 @@ public class WayController {
 
     @Autowired
     private ApiService apiService;
+
+    @Autowired
+    private WayService wayService;
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
@@ -67,6 +73,18 @@ public class WayController {
 
         return ResponseEntity.ok(way);
 
+    }
+
+    @PostMapping("/saveWay")
+    public ResponseEntity<Boolean> saveFavoriteWay(String username,String pathStart,String pathEnd){
+        if (username == null || pathStart == null || pathEnd == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else if (!wayService.checkFavoriteWay(username, pathStart, pathEnd)){
+                wayService.saveFavoriteWay(username, pathStart, pathEnd);
+                return ResponseEntity.ok(true);
+        }else {
+            return ResponseEntity.ok(false);
+        }
     }
 
     public Way jsonToWay(String str) throws JsonProcessingException {

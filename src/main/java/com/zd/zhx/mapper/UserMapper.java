@@ -14,6 +14,6 @@ public interface UserMapper {
     @Insert("insert into user(username,password,type,img,speed) values(#{username},#{password},#{type},#{img},#{speed})")
     void insertUser(User user);
 
-    @Select("select speed from user where username={username}")
+    @Select("select speed from user where username=#{username}")
     Double getUserSpeed(String username);
 }
