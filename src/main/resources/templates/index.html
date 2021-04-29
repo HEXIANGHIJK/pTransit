@@ -179,7 +179,7 @@
 <body style="background-color: #f5f5dc33; display: flex;">
 
 <!--用户栏-->
-<div style="z-index: 1000; position: absolute; top: 10px; right: 10px; height: 60px; width: 60px;">
+<!--<div style="z-index: 1000; position: absolute; top: 10px; right: 10px; height: 60px; width: 60px;">
     <div id="bar"
          style="border-radius: 30px; height: 60px; width: 60px; background-color: #ff7813"
          onmousemove="this.style.backgroundColor='#ff8d34'"
@@ -191,40 +191,40 @@
 
 
     </div>
-    <!--已登录登录栏-->
+    &lt;!&ndash;已登录登录栏&ndash;&gt;
     <div id="userBarOk" hidden="hidden"
          style="color: white ; transform: translate(-62%,0%); position:absolute; float:right; height: 222px;width: 160px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#ff7813, #ff7813);">
-        <!--内容-->
+        &lt;!&ndash;内容&ndash;&gt;
         <div style="height: 215px;width: 157px; margin-top: 2px; margin-left: 2px; background-color: #ff8a35; border-radius: 5px;">
             <div style="background-color: #ff7813;height: 140px;border-radius: 5px;">
-                <!--头像-->
+                &lt;!&ndash;头像&ndash;&gt;
                 <div style="margin: 0 auto;height: 100px;width: 147px;background-color: #ff9952;border-radius: 5px;">
                     <img id="userImg" src="img/unLogin.png"
                          style="border-radius: 40px;width:80px;height:80px;margin-left: 35px; margin-top: 20px;"
                          alt=""/>
                 </div>
 
-                <!--用户名-->
+                &lt;!&ndash;用户名&ndash;&gt;
                 <div style="text-align: center; height:40px ;max-width:147px ;border-radius: 2px;">
                     <a style="" id="loginUsername"></a>
                 </div>
             </div>
 
-            <!--分割线-->
+            &lt;!&ndash;分割线&ndash;&gt;
             <div class="barLine"></div>
 
             <div class="barBtn" id="userDetail">
                 <a class="barText">个人信息</a>
             </div>
 
-            <!--分割线-->
+            &lt;!&ndash;分割线&ndash;&gt;
             <div class="barLine"></div>
 
             <div class="barBtn" id="favorites">
                 <a class="barText">收藏</a>
             </div>
 
-            <!--分割线-->
+            &lt;!&ndash;分割线&ndash;&gt;
             <div class="barLine"></div>
 
             <div class="barBtn" id="logout">
@@ -234,12 +234,12 @@
         </div>
     </div>
 
-    <!--未登录登录栏-->
+    &lt;!&ndash;未登录登录栏&ndash;&gt;
     <div id="userBarNo" hidden="hidden"
          style="transform: translate(-62%,0%); position:absolute; float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
-        <!--内容-->
+        &lt;!&ndash;内容&ndash;&gt;
         <div style="height: 145px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
-            <!--头像-->
+            &lt;!&ndash;头像&ndash;&gt;
             <div style="margin: 0 auto;height: 120px;width: 147px;background-color: #979797">
                 <img src="img/unLogin.png"
                      style="border-radius: 40px;width:80px;height:80px;margin-left: 35px; margin-top: 20px;"
@@ -260,10 +260,10 @@
         </div>
     </div>
 
-    <!--登录窗口-->
+    &lt;!&ndash;登录窗口&ndash;&gt;
     <div id="loginBar" hidden="hidden"
          style="transform: translate(-62%,0%); position:absolute; float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
-        <!--内容-->
+        &lt;!&ndash;内容&ndash;&gt;
         <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
             <form action="/login">
                 <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
@@ -290,10 +290,10 @@
         </div>
     </div>
 
-    <!--注册窗口-->
+    &lt;!&ndash;注册窗口&ndash;&gt;
     <div id="registerBar" hidden="hidden"
          style="transform: translate(-62%,0%); position:absolute; float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
-        <!--内容-->
+        &lt;!&ndash;内容&ndash;&gt;
         <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
             <form action="/login">
                 <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
@@ -317,7 +317,7 @@
             </form>
         </div>
     </div>
-</div>
+</div>-->
 
 
 <!--地点选择-->
@@ -328,6 +328,113 @@
         width: 25%;
         z-index: 999;
         background: #fff;">
+    <!--用户栏-->
+    <div style="width: 100%; height: auto; display: flex; align-items: center; justify-content: space-between;">
+        <div style="height: 100%;width: auto; background-image: linear-gradient(to right,#6a6a6a, #ffffff); display: flex; align-items: center;">
+            <img id="userImg" src="img/unLogin.png"
+                 style="border-radius: 30px;width:60px;height:60px; margin: 10px 20px"
+                 alt=""/>
+
+        </div>
+        <!--未登录窗口-->
+        <div id="userBarNo" style="height: 100%; min-width: 70%; width: auto; display: flex;justify-content: space-around; align-items: center;">
+            <div id="inLogin" style="height: 30px; width: 100px; background-color: #ff9248; border-radius: 5px; border: #ff6d00 2px solid; color: white; font-size: 16px; font-weight: 500; display: flex; justify-content: center; align-items: center;"
+                 onmousemove="this.style.backgroundColor='#ffd9c0'"
+                 onmouseout="this.style.backgroundColor='#ff9248'"
+                 onclick="document.getElementById('loginBar').style.display='flex';
+                          document.getElementById('userBarNo').style.display='none'">
+                <span>登录</span>
+            </div>
+
+            <div id="inRegister" style="height: 30px; width: 100px; background-color: #ff9248; border-radius: 5px; border: #ff6d00 2px solid; color: white; font-size: 16px; font-weight: 500; display: flex; justify-content: center; align-items: center;"
+                 onmousemove="this.style.backgroundColor='#ffd9c0'"
+                 onmouseout="this.style.backgroundColor='#ff9248'"
+                 onclick="document.getElementById('registerBar').style.display='flex';
+                          document.getElementById('userBarNo').style.display='none'">
+                <span>注册</span>
+            </div>
+        </div>
+        <!--登录窗口-->
+        <div id="loginBar" style="height: 100%; min-width: 70%; width: auto; display: none;justify-content: center; align-items: center;">
+            <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
+                <form action="/login">
+                    <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
+                        <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; font-weight: bold">登录</a>
+                    </div>
+                    <div class="lgBarBtnLeft"><a class="barText">用户名</a></div>
+                    <input type="text" name="username" id="username"
+                           style="outline-style: none; border: 0; height: 30px; width: 147px;">
+                    <div class="lgBarBtnLeft"><a class="barText">密码</a></div>
+                    <input type="password" name="password" id="password"
+                           style="outline-style: none; border: 0; height: 30px; width: 147px; padding: 4.5px 9px;">
+                    <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
+                         onmousemove="this.style.backgroundColor='#c0ffe7'"
+                         onmouseout="this.style.backgroundColor='#daffed'"
+                         id="loginBtn">
+                        <a class="barText">登录</a></div>
+                    <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
+                    <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
+                         onmousemove="this.style.backgroundColor='#e7e7e7'"
+                         onmouseout="this.style.backgroundColor='#f5f5f5'"
+                         onclick="document.getElementById('loginBar').hidden=true;document.getElementById('userBarNo').hidden=false">
+                        <a class="barText">返回</a></div>
+                </form>
+            </div>
+        </div>
+        <!--注册窗口-->
+        <div id="registerBar" style="height: 100%; min-width: 70%; width: auto; display: none;justify-content: center; align-items: center;">
+            <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
+                <form action="/login">
+                    <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
+                        <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; font-weight: bold">注册</a>
+                    </div>
+                    <div class="lgBarBtnLeft"><a class="barText">用户名</a></div>
+                    <input type="text" name="username" id="rUsername"
+                           style="outline-style: none; border: 0; height: 30px; width: 147px;">
+                    <div class="lgBarBtnLeft"><a class="barText">密码</a></div>
+                    <input type="password" name="password" id="rPassword"
+                           style="outline-style: none; border: 0; height: 30px; width: 147px; padding: 4.5px 9px;">
+                    <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
+                         onmousemove="this.style.backgroundColor='#c0ffe7'" onmouseout="this.style.backgroundColor='#daffed'"
+                         id="registerBtn">
+                        <a class="barText" onclick="register()">注册</a></div>
+                    <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
+                    <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
+                         onmousemove="this.style.backgroundColor='#e7e7e7'" onmouseout="this.style.backgroundColor='#f5f5f5'"
+                         onclick="document.getElementById('registerBar').hidden=true;document.getElementById('userBarNo').hidden=false">
+                        <a class="barText">返回</a></div>
+                </form>
+            </div>
+        </div>
+        <!--已登录窗口-->
+        <div id="userBarOk" style="height: 100%; min-width: 70%; width: auto; display: none;justify-content: center; align-items: center;">
+            &lt;!&ndash;用户名&ndash;&gt;
+            <div style="text-align: center; height:40px ;max-width:147px ;border-radius: 2px;">
+                <a style="" id="loginUsername"></a>
+            </div>
+
+        &lt;!&ndash;分割线&ndash;&gt;
+        <div class="barLine"></div>
+
+        <div class="barBtn" id="userDetail">
+            <a class="barText">个人信息</a>
+        </div>
+
+        &lt;!&ndash;分割线&ndash;&gt;
+        <div class="barLine"></div>
+
+        <div class="barBtn" id="favorites">
+            <a class="barText">收藏</a>
+        </div>
+
+        &lt;!&ndash;分割线&ndash;&gt;
+        <div class="barLine"></div>
+
+        <div class="barBtn" id="logout">
+            <a class="barText">注销</a>
+        </div>
+        </div>
+    </div>
     <div style="display: flex;height: auto;width: 100%; background-color: #e7e7e7; padding: 5px 0px; border-bottom: #979797 1px solid; justify-content: center; align-self: center;">
         <div style="overflow: hidden; border: 2px solid #ff6f00; border-radius: 5px; width: 100%;min-height: 85%; max-height: 100%; margin: 5px 20px; display: flex; background-color: #ff6f00;">
             <div style="display: flex;flex-direction: column;justify-content: center; width: 70%">
