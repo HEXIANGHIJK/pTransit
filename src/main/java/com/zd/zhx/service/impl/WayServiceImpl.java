@@ -69,7 +69,7 @@ public class WayServiceImpl implements WayService {
     }
 
     @Override
-    public FavoriteWayVo[] getFavoriteWays(String username) {
+    public List<FavoriteWayVo> getFavoriteWays(String username) {
 
         return wayMapper.selectFavoriteWayList();
     }

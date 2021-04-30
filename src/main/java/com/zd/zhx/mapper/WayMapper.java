@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface WayMapper {
 
@@ -16,5 +18,5 @@ public interface WayMapper {
     public FavoriteWayVo selectFavoriteWay(@Param("username") String username, @Param("spx") String spx, @Param("spy") String spy, @Param("epx") String epx, @Param("epy") String epy);
 
     @Select("select * from favorites")
-    public FavoriteWayVo[] selectFavoriteWayList();
+    public List<FavoriteWayVo> selectFavoriteWayList();
 }

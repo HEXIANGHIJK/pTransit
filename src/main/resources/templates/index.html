@@ -72,11 +72,6 @@
         border-radius: 2px;
     }
 
-    .lgBarText {
-        font-family: 微软雅黑, sans-serif;
-        font-size: 12px;
-    }
-
     #tip {
         background-color: #ddf;
         color: #333;
@@ -178,148 +173,6 @@
 
 <body style="background-color: #f5f5dc33; display: flex;">
 
-<!--用户栏-->
-<!--<div style="z-index: 1000; position: absolute; top: 10px; right: 10px; height: 60px; width: 60px;">
-    <div id="bar"
-         style="border-radius: 30px; height: 60px; width: 60px; background-color: #ff7813"
-         onmousemove="this.style.backgroundColor='#ff8d34'"
-         onmouseout="this.style.backgroundColor='#ff7813'"
-         onclick="">
-        <div>
-            <img id="barImg" src="img/unLogin.png" style="border-radius: 30px;width:56px;height:56px; margin: 2px;" alt=""/>
-        </div>
-
-
-    </div>
-    &lt;!&ndash;已登录登录栏&ndash;&gt;
-    <div id="userBarOk" hidden="hidden"
-         style="color: white ; transform: translate(-62%,0%); position:absolute; float:right; height: 222px;width: 160px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#ff7813, #ff7813);">
-        &lt;!&ndash;内容&ndash;&gt;
-        <div style="height: 215px;width: 157px; margin-top: 2px; margin-left: 2px; background-color: #ff8a35; border-radius: 5px;">
-            <div style="background-color: #ff7813;height: 140px;border-radius: 5px;">
-                &lt;!&ndash;头像&ndash;&gt;
-                <div style="margin: 0 auto;height: 100px;width: 147px;background-color: #ff9952;border-radius: 5px;">
-                    <img id="userImg" src="img/unLogin.png"
-                         style="border-radius: 40px;width:80px;height:80px;margin-left: 35px; margin-top: 20px;"
-                         alt=""/>
-                </div>
-
-                &lt;!&ndash;用户名&ndash;&gt;
-                <div style="text-align: center; height:40px ;max-width:147px ;border-radius: 2px;">
-                    <a style="" id="loginUsername"></a>
-                </div>
-            </div>
-
-            &lt;!&ndash;分割线&ndash;&gt;
-            <div class="barLine"></div>
-
-            <div class="barBtn" id="userDetail">
-                <a class="barText">个人信息</a>
-            </div>
-
-            &lt;!&ndash;分割线&ndash;&gt;
-            <div class="barLine"></div>
-
-            <div class="barBtn" id="favorites">
-                <a class="barText">收藏</a>
-            </div>
-
-            &lt;!&ndash;分割线&ndash;&gt;
-            <div class="barLine"></div>
-
-            <div class="barBtn" id="logout">
-                <a class="barText">注销</a>
-            </div>
-
-        </div>
-    </div>
-
-    &lt;!&ndash;未登录登录栏&ndash;&gt;
-    <div id="userBarNo" hidden="hidden"
-         style="transform: translate(-62%,0%); position:absolute; float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
-        &lt;!&ndash;内容&ndash;&gt;
-        <div style="height: 145px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
-            &lt;!&ndash;头像&ndash;&gt;
-            <div style="margin: 0 auto;height: 120px;width: 147px;background-color: #979797">
-                <img src="img/unLogin.png"
-                     style="border-radius: 40px;width:80px;height:80px;margin-left: 35px; margin-top: 20px;"
-                     alt=""/>
-            </div>
-            <div class="lgBarBtn"
-                 onmousemove="this.style.backgroundColor='#d5d5d5'" onmouseout="this.style.backgroundColor='#c1c1c1'"
-                 id="inLogin" onclick="document.getElementById('loginBar').hidden=!document.getElementById('loginBar').hidden;
-                                    document.getElementById('userBarNo').hidden='hidden'">
-                <a class="barText" onclick="temCheck()">登录</a>
-            </div>
-            <div class="lgBarBtn"
-                 onmousemove="this.style.backgroundColor='#d5d5d5'" onmouseout="this.style.backgroundColor='#c1c1c1'"
-                 id="inRegister" onclick="document.getElementById('registerBar').hidden=!document.getElementById('registerBar').hidden;
-                                    document.getElementById('userBarNo').hidden=true">
-                <a class="barText">注册</a>
-            </div>
-        </div>
-    </div>
-
-    &lt;!&ndash;登录窗口&ndash;&gt;
-    <div id="loginBar" hidden="hidden"
-         style="transform: translate(-62%,0%); position:absolute; float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
-        &lt;!&ndash;内容&ndash;&gt;
-        <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
-            <form action="/login">
-                <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
-                    <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; font-weight: bold">登录</a>
-                </div>
-                <div class="lgBarBtnLeft"><a class="barText">用户名</a></div>
-                <input type="text" name="username" id="username"
-                       style="outline-style: none; border: 0; height: 30px; width: 147px;">
-                <div class="lgBarBtnLeft"><a class="barText">密码</a></div>
-                <input type="password" name="password" id="password"
-                       style="outline-style: none; border: 0; height: 30px; width: 147px; padding: 4.5px 9px;">
-                <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
-                     onmousemove="this.style.backgroundColor='#c0ffe7'"
-                     onmouseout="this.style.backgroundColor='#daffed'"
-                     id="loginBtn">
-                    <a class="barText">登录</a></div>
-                <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
-                <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
-                     onmousemove="this.style.backgroundColor='#e7e7e7'"
-                     onmouseout="this.style.backgroundColor='#f5f5f5'"
-                     onclick="document.getElementById('loginBar').hidden=true;document.getElementById('userBarNo').hidden=false">
-                    <a class="barText">返回</a></div>
-            </form>
-        </div>
-    </div>
-
-    &lt;!&ndash;注册窗口&ndash;&gt;
-    <div id="registerBar" hidden="hidden"
-         style="transform: translate(-62%,0%); position:absolute; float:right; height: 170px;width: 150px; margin-top: 5px;margin-right: 2px; border-radius: 5px; background-image: radial-gradient(#979797, #979797);">
-        &lt;!&ndash;内容&ndash;&gt;
-        <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
-            <form action="/login">
-                <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
-                    <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; font-weight: bold">注册</a>
-                </div>
-                <div class="lgBarBtnLeft"><a class="barText">用户名</a></div>
-                <input type="text" name="username" id="rUsername"
-                       style="outline-style: none; border: 0; height: 30px; width: 147px;">
-                <div class="lgBarBtnLeft"><a class="barText">密码</a></div>
-                <input type="password" name="password" id="rPassword"
-                       style="outline-style: none; border: 0; height: 30px; width: 147px; padding: 4.5px 9px;">
-                <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
-                     onmousemove="this.style.backgroundColor='#c0ffe7'" onmouseout="this.style.backgroundColor='#daffed'"
-                     id="registerBtn">
-                    <a class="barText" onclick="register()">注册</a></div>
-                <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
-                <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
-                     onmousemove="this.style.backgroundColor='#e7e7e7'" onmouseout="this.style.backgroundColor='#f5f5f5'"
-                     onclick="document.getElementById('registerBar').hidden=true;document.getElementById('userBarNo').hidden=false">
-                    <a class="barText">返回</a></div>
-            </form>
-        </div>
-    </div>
-</div>-->
-
-
 <!--地点选择-->
 <div class="scrollbar" style="display: flex;
         flex-direction: column;
@@ -329,15 +182,15 @@
         z-index: 999;
         background: #fff;">
     <!--用户栏-->
-    <div style="width: 100%; height: auto; display: flex; align-items: center; justify-content: space-between;">
-        <div style="height: 100%;width: auto; background-image: linear-gradient(to right,#6a6a6a, #ffffff); display: flex; align-items: center;">
+    <div style="width: 100%; height: auto; display: flex; align-items: center; justify-content: flex-start;">
+        <div id="userLogoBg" style="height: 100%;width: auto; background-image: linear-gradient(to right,#6a6a6a, #ffffff); display: flex; align-items: center;">
             <img id="userImg" src="img/unLogin.png"
                  style="border-radius: 30px;width:60px;height:60px; margin: 10px 20px"
                  alt=""/>
 
         </div>
         <!--未登录窗口-->
-        <div id="userBarNo" style="height: 100%; min-width: 70%; width: auto; display: flex;justify-content: space-around; align-items: center;">
+        <div id="userBarNo" style="height: 100%; min-width: 70%; width: 100%; display: flex;justify-content: space-around; align-items: center;">
             <div id="inLogin" style="height: 30px; width: 100px; background-color: #ff9248; border-radius: 5px; border: #ff6d00 2px solid; color: white; font-size: 16px; font-weight: 500; display: flex; justify-content: center; align-items: center;"
                  onmousemove="this.style.backgroundColor='#ffd9c0'"
                  onmouseout="this.style.backgroundColor='#ff9248'"
@@ -355,84 +208,95 @@
             </div>
         </div>
         <!--登录窗口-->
-        <div id="loginBar" style="height: 100%; min-width: 70%; width: auto; display: none;justify-content: center; align-items: center;">
-            <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
-                <form action="/login">
-                    <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
-                        <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; font-weight: bold">登录</a>
-                    </div>
-                    <div class="lgBarBtnLeft"><a class="barText">用户名</a></div>
+        <div id="loginBar" style="height: 100%; min-width: 70%; width: 100%; display: none;justify-content: center; align-items: center;">
+
+            <form style="display: flex; flex-direction: column; height: 100%;width: 100%; background-color: #ffffffff; border-radius: 5px;">
+                <div style="display: flex; height: 50%; justify-content: stretch; position: relative; border-bottom: 1px solid #DDDDDD">
                     <input type="text" name="username" id="username"
-                           style="outline-style: none; border: 0; height: 30px; width: 147px;">
-                    <div class="lgBarBtnLeft"><a class="barText">密码</a></div>
-                    <input type="password" name="password" id="password"
-                           style="outline-style: none; border: 0; height: 30px; width: 147px; padding: 4.5px 9px;">
-                    <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
-                         onmousemove="this.style.backgroundColor='#c0ffe7'"
-                         onmouseout="this.style.backgroundColor='#daffed'"
+                           style="outline-style: none; border: 0; height: 100%; width: 70%; background-color: white;">
+                    <div style="text-align: center; height: 100%; width: 50%; border-top: 40px solid #ffce97;border-left: 40px solid transparent; position: absolute; right: 0; display: flex;"
+                         onmousemove="this.style.borderTop=' 40px solid #ffdab4'"
+                         onmouseout="this.style.borderTop=' 40px solid #ffce97'"
                          id="loginBtn">
-                        <a class="barText">登录</a></div>
-                    <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
-                    <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
-                         onmousemove="this.style.backgroundColor='#e7e7e7'"
-                         onmouseout="this.style.backgroundColor='#f5f5f5'"
-                         onclick="document.getElementById('loginBar').hidden=true;document.getElementById('userBarNo').hidden=false">
-                        <a class="barText">返回</a></div>
-                </form>
-            </div>
+                        <a class="barText"
+                           style="height: 100%; width: 100%; position: absolute;top: -35px; right: 0; font-size: 18px; font-weight: 400; color: white;">登录</a>
+                    </div>
+                </div>
+                <div style="display: flex; height: 50%; justify-content: stretch; position: relative;">
+                    <input type="text" name="username" id="password"
+                           style="outline-style: none; border: 0; height: 100%; width: 70%; background-color: white;">
+                    <div style="text-align: center; height: 100%; width: 50%; border-bottom: 40px solid #bfbfbf;border-left: 40px solid transparent; position: absolute; right: 0; display: flex;"
+                         onmousemove="this.style.borderBottom=' 40px solid #dddddd'"
+                         onmouseout="this.style.borderBottom=' 40px solid #bfbfbf'"
+                         onclick="document.getElementById('userBarNo').style.display='flex';
+                                  document.getElementById('loginBar').style.display='none'">
+                        <a class="barText"
+                           style="height: 100%; width: 100%; position: absolute;top: 6px; right: 0; font-size: 18px; font-weight: 400; color: white;">返回</a>
+                    </div>
+                </div>
+            </form>
+
         </div>
         <!--注册窗口-->
-        <div id="registerBar" style="height: 100%; min-width: 70%; width: auto; display: none;justify-content: center; align-items: center;">
-            <div style="height: 165px;width: 147px; margin-top: 2px; margin-left: 2px; background-color: #ffffffff; border-radius: 5px;">
-                <form action="/login">
-                    <div style="text-align: center; height:30px ;width: auto;background-color: #c1c1c1;border-radius: 2px;">
-                        <a style="font-family: 微软雅黑, sans-serif; font-size: 18px; font-weight: bold">注册</a>
-                    </div>
-                    <div class="lgBarBtnLeft"><a class="barText">用户名</a></div>
+        <div id="registerBar" style="height: 100%; min-width: 70%; width: 100%; display: none;justify-content: center; align-items: center;">
+
+            <form style="display: flex; flex-direction: column; height: 100%;width: 100%; background-color: #ffffffff; border-radius: 5px;">
+                <div style="display: flex; height: 50%; justify-content: stretch; position: relative; border-bottom: 1px solid #DDDDDD">
                     <input type="text" name="username" id="rUsername"
-                           style="outline-style: none; border: 0; height: 30px; width: 147px;">
-                    <div class="lgBarBtnLeft"><a class="barText">密码</a></div>
-                    <input type="password" name="password" id="rPassword"
-                           style="outline-style: none; border: 0; height: 30px; width: 147px; padding: 4.5px 9px;">
-                    <div style="text-align: center; height: 25px; width: 73px; background-color: #daffed; border-radius: 2px; float: left"
-                         onmousemove="this.style.backgroundColor='#c0ffe7'" onmouseout="this.style.backgroundColor='#daffed'"
-                         id="registerBtn">
-                        <a class="barText" onclick="register()">注册</a></div>
-                    <div style="height: 0;width:1px;background-color: #a3a3a3;float:left;"></div>
-                    <div style="text-align: center; height: 25px; width: 73px; background-color: #f5f5f5; border-radius: 2px; float: left"
-                         onmousemove="this.style.backgroundColor='#e7e7e7'" onmouseout="this.style.backgroundColor='#f5f5f5'"
-                         onclick="document.getElementById('registerBar').hidden=true;document.getElementById('userBarNo').hidden=false">
-                        <a class="barText">返回</a></div>
-                </form>
-            </div>
+                           style="outline-style: none; border: 0; height: 100%; width: 70%; background-color: white;">
+                    <div style="text-align: center; height: 100%; width: 50%; border-top: 40px solid #ffe897;border-left: 40px solid transparent; position: absolute; right: 0; display: flex;"
+                         onmousemove="this.style.borderTop=' 40px solid #ffecc2'"
+                         onmouseout="this.style.borderTop=' 40px solid #ffe897'"
+                         onclick="register()">
+                        <a class="barText"
+                           style="height: 100%; width: 100%; position: absolute;top: -35px; right: 0; font-size: 18px; font-weight: 400; color: white;">注册</a>
+                    </div>
+                </div>
+                <div style="display: flex; height: 50%; justify-content: stretch; position: relative;">
+                    <input type="text" name="username" id="rPassword"
+                           style="outline-style: none; border: 0; height: 100%; width: 70%; background-color: white;">
+                    <div style="text-align: center; height: 100%; width: 50%; border-bottom: 40px solid #bfbfbf;border-left: 40px solid transparent; position: absolute; right: 0; display: flex;"
+                         onmousemove="this.style.borderBottom=' 40px solid #eeeeee'"
+                         onmouseout="this.style.borderBottom=' 40px solid #bfbfbf'"
+                         onclick="document.getElementById('userBarNo').style.display='flex';
+                                  document.getElementById('loginBar').style.display='none'">
+                        <a class="barText"
+                           style="height: 100%; width: 100%; position: absolute;top: 6px; right: 0; font-size: 18px; font-weight: 400; color: white;">返回</a>
+                    </div>
+                </div>
+            </form>
+
         </div>
         <!--已登录窗口-->
-        <div id="userBarOk" style="height: 100%; min-width: 70%; width: auto; display: none;justify-content: center; align-items: center;">
-            &lt;!&ndash;用户名&ndash;&gt;
-            <div style="text-align: center; height:40px ;max-width:147px ;border-radius: 2px;">
-                <a style="" id="loginUsername"></a>
+        <div id="userBarOk" style="height: 100%; min-width: 70%; width: 100%; display: none;justify-content: center; align-items: center;">
+            <div style="display: flex; flex-direction: column; width: 50%; height: 100%; align-items: flex-start; justify-items: center; border-bottom: 1px solid #DDDDDD">
+                    <span style="margin-left:20px; margin-top: 5px; text-align: center; height: 50%; width: 150px; right: 0; display: flex; font-size: 20px;">
+                        欢迎
+                    </span>
+                    <span id="loginUsername" style="margin-left:20px; text-align: center; height: 50%; width: 150px; right: 0; display: flex; font-size: 18px;">
+
+                    </span>
+
             </div>
-
-        &lt;!&ndash;分割线&ndash;&gt;
-        <div class="barLine"></div>
-
-        <div class="barBtn" id="userDetail">
-            <a class="barText">个人信息</a>
-        </div>
-
-        &lt;!&ndash;分割线&ndash;&gt;
-        <div class="barLine"></div>
-
-        <div class="barBtn" id="favorites">
-            <a class="barText">收藏</a>
-        </div>
-
-        &lt;!&ndash;分割线&ndash;&gt;
-        <div class="barLine"></div>
-
-        <div class="barBtn" id="logout">
-            <a class="barText">注销</a>
-        </div>
+            <div style="display: flex; flex-direction: column;width: 100%; height: 100%; justify-content: stretch; position: relative;">
+                <div style="text-align: center; height: 50%; width: 150px; border-top: 40px solid #ffe897;border-left: 40px solid transparent; position: absolute; right: 0; display: flex;"
+                     onmousemove="this.style.borderTop=' 40px solid #ffecc2'"
+                     onmouseout="this.style.borderTop=' 40px solid #ffe897'"
+                     onclick="searchFavorites()"
+                     id="favorites">
+                    <a class="barText"
+                       style="height: 100%; width: 100%; position: absolute;top: -35px; right: 0; font-size: 18px; font-weight: 400; color: white;">我的收藏</a>
+                </div>
+                <div style="text-align: center; height: 50%; width: 110px; border-top: 40px solid #bfbfbf;border-left: 40px solid transparent; position: absolute; right: 0; bottom: 0; display: flex;"
+                     onmousemove="this.style.borderTop=' 40px solid #eeeeee'"
+                     onmouseout="this.style.borderTop=' 40px solid #bfbfbf'"
+                     onclick="document.getElementById('userBarNo').style.display='flex';
+                                  document.getElementById('loginBar').style.display='none'"
+                     id="logout">
+                    <a class="barText"
+                       style="height: 100%; width: 100%; position: absolute;top: -35px; right: 0; font-size: 18px; font-weight: 400; color: white;">注销</a>
+                </div>
+            </div>
         </div>
     </div>
     <div style="display: flex;height: auto;width: 100%; background-color: #e7e7e7; padding: 5px 0px; border-bottom: #979797 1px solid; justify-content: center; align-self: center;">
@@ -458,6 +322,7 @@
 
                     <input type="button" value="⇵"
                            id="changeWays"
+                           onclick="changeWays()"
                            style="border-radius: 0px;height: auto;width: 100%;border: 0px; background-color: #ff6f00; color: white; font-size: 22px; font-weight: 500;">
                 </div>
                 <div style="border-right: 2px solid #ff8925; height: 80%; width: 0px;"></div>
@@ -470,79 +335,12 @@
     <div id="panel" style="max-height: 427px;width: auto; position: relative;">
 
     </div>
-    <div style="z-index: 10000; width: 25%; top: 70px; position: absolute; display: flex; flex-direction: column;  background-color: aliceblue; justify-content: flex-start;align-items: center;" id="searchPlace">
+    <div style="z-index: 10000; width: 25%; top: 150px; position: absolute; display: flex; flex-direction: column;  background-color: aliceblue; justify-content: flex-start;align-items: center;" id="searchPlace">
 
     </div>
 </div>
 <script src="//webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
-<script>
-    /*搜索位置*/
-    /*AMapUI.loadUI(['misc/PoiPicker'], function (PoiPicker) {
 
-        var poiPicker = new PoiPicker({
-            input: 'searchInputFrom',
-            placeSearchOptions: {
-                map: map,
-                pageSize: 10
-            },
-            searchResultsContainer: 'searchResults'
-        });
-
-        poiPicker.on('poiPicked', function (poiResult) {
-
-            poiPicker.hideSearchResults();
-
-            var source = poiResult.source,
-                poi = poiResult.item;
-
-            if (source !== 'search') {
-
-                //suggest来源的，同样调用搜索
-                poiPicker.searchByKeyword(poi.name);
-
-            } else {
-
-                //console.log(poi);
-            }
-        });
-
-        poiPicker.onCityReady(function () {
-            poiPicker.searchByKeyword('');
-        });
-
-        var poiPicker1 = new PoiPicker({
-            input: 'searchInputTo',
-            placeSearchOptions: {
-                map: map,
-                pageSize: 10
-            },
-            searchResultsContainer: 'searchResults'
-        });
-
-        poiPicker1.on('poiPicked', function (poiResult) {
-
-            poiPicker.hideSearchResults();
-
-            var source = poiResult.source,
-                poi = poiResult.item;
-
-            if (source !== 'search') {
-
-                //suggest来源的，同样调用搜索
-                poiPicker1.searchByKeyword(poi.name);
-
-            } else {
-
-                //console.log(poi);
-            }
-        });
-
-        poiPicker.onCityReady(function () {
-            poiPicker.searchByKeyword('');
-        });
-    });*/
-
-</script>
 
 <!--地图框-->
 <div style="z-index: 500; border-left: 1px solid gray; width: 75%; height: 100%; position: relative;" id="mapBorder">
@@ -565,17 +363,9 @@
 
 </body>
 
-<!--行为-->
-<script>
-
-    $('.barBtn').attr('onmousemove', "this.className='barBtnOn'").attr('onmouseout', "this.className='barBtn'");
-
-
-</script>
-<!--引入-->
 <script src="https://code.jquery.com/jquery-2.2.3.js" type="text/javascript"></script>
 <script type="text/javascript">
-
+    $('.barBtn').attr('onmousemove', "this.className='barBtnOn'").attr('onmouseout', "this.className='barBtn'");
     //已登录用户
     var username="";
 
@@ -807,6 +597,57 @@
         })
     }
 
+    //收藏夹显示
+    function searchFavorites(){
+        $.ajax({
+            type: "GET",
+            url: "way/getFavorites",
+            data: {username:username},
+            dataType: "json",
+            success: function (data) {
+
+                var searches="";
+                var startAddress="";
+                var endAddress="";
+                for (var i=0;i<data.length;i++){
+
+                    var path=data[i];
+
+                    lng=new AMap.LngLat(parseFloat(path.start_path_x),parseFloat(path.start_path_y));
+                    lng1=new AMap.LngLat(parseFloat(path.end_path_x),parseFloat(path.end_path_y));
+
+
+
+                    geocoder.getAddress( lng , function(status, result) {
+                        if (status === 'complete'&&result.regeocode) {
+                            startAddress = result.regeocode.formattedAddress;
+                            alert(startAddress);
+                            document.getElementById('startAdress'+i).value = startAddress;
+                        }else{
+                            log.error('start根据经纬度查询地址失败')
+                        }
+                    });
+
+                    geocoder.getAddress( lng1 , function(status, result) {
+
+                        if (status === 'complete'&&result.regeocode) {
+                            endAddress = result.regeocode.formattedAddress;
+                            document.getElementById('endAdress'+i).value = endAddress;
+                        }else{
+                            log.error('end根据经纬度查询地址失败')
+                        }
+                    });
+
+                    searches+="<div style=\"width: 100%; height: 100%; padding: 2px; border-bottom: 1px solid #a3a3a3;display: flex;flex-direction: column;\" onmouseover=\"this.style.backgroundColor='#f0f0f0'\"onmouseout=\"this.style.backgroundColor='#ffffff'\"onclick=\"getThisLoc("+i+")\"><div><span style=\"font-size: 16px;font-weight: 500;margin-left: 10px\">从</span><span id='startAdress"+i+"' style=\"font-size: 16px;font-weight: 500;margin-left: 10px\">"+startAddress+"</span></div><div><span style=\"font-size: 16px;font-weight: 500;margin-left: 10px\">到</span><span id='endAdress"+i+"' style=\"font-size: 16px;font-weight: 500;margin-left: 10px\">"+endAddress+"</span></div></div>"
+                }
+                $("#searchPlace").html(searches);
+            },
+            error: function () {
+                alert("查找出错")
+            }
+        })
+    }
+
     //搜索结果选中
     function getThisLoc(count){
         $('#panel').empty();
@@ -903,29 +744,34 @@
 
     //注册操作
     function register() {
-        $.ajax({
-            type: "POST",
-            url: "user/register",
-            data: {username: $('#rUsername').val(), password: $('#rPassword').val()},
-            dataType: "json",
-            success: function (data) {
-                if (data !== null || data !== "null") {
-                    alert("注册成功！");
-                    temCheck();
-                    //$('#registerBar').attr("hidden","true");
-                    document.getElementById('registerBar').hidden = true;
-                    //$('#loginBar').attr("hidden","false");
-                    document.getElementById('loginBar').hidden = false;
-                } else {
+        var rUsername=$('#rUsername').val();
+        var rPassword=$('#rPassword').val();
+        if (rUsername && rUsername !== "null" && rUsername !== null && rPassword && rPassword!=="Null" &&rPassword!==null) {
+
+            $.ajax({
+                type: "POST",
+                url: "user/register",
+                data: {username: $('#rUsername').val(), password: $('#rPassword').val()},
+                dataType: "json",
+                success: function (data) {
+                    if (data !== null || data !== "null") {
+                        alert("注册成功！");
+                        temCheck();
+                        //$('#registerBar').attr("hidden","true");
+                        document.getElementById('registerBar').hidden = true;
+                        //$('#loginBar').attr("hidden","false");
+                        document.getElementById('loginBar').hidden = false;
+                    } else {
+                        alert("该用户已存在！");
+                    }
+                },
+                error: function () {
                     alert("该用户已存在！");
+                    document.getElementById('rUsername').innerHTML = "";
+                    document.getElementById('rPassword').innerHTML = "";
                 }
-            },
-            error: function () {
-                alert("该用户已存在！");
-                document.getElementById('rUsername').innerHTML = "";
-                document.getElementById('rPassword').innerHTML = "";
-            }
-        })
+            })
+        }
     }
 
     //伪登录名验证
@@ -976,9 +822,11 @@
                 if (data != null) {
                     username=data.username;
                     //是登陆状态
-                    $('#bar').attr('onclick', "document.getElementById('userBarOk').hidden=!document.getElementById('userBarOk').hidden");
-                    $('#userImg,#barImg').attr('src', data.img);
-                    $('#loginUsername').html("欢迎，" + data.username).style = "max-width:145px ;font-family:微软雅黑,sans-serif; font-size:20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;";
+                    document.getElementById('userBarNo').style.display='none';
+                    document.getElementById('userBarOk').style.display='flex';
+                    document.getElementById('userLogoBg').style.backgroundImage='linear-gradient(to right,#ff8c00, #ffffff)';
+                    $('#userImg').attr('src', data.img);
+                    $('#loginUsername').html(data.username).style = "max-width:145px ;font-family:微软雅黑,sans-serif; font-size:20px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;";
                 } else {
                     //不是登陆状态
                     $('#bar').attr('onclick', "if(document.getElementById('loginBar').hidden!=true){document.getElementById('userBarNo').hidden=true;document.getElementById('loginBar').hidden=true;} else{document.getElementById('userBarNo').hidden=!document.getElementById('userBarNo').hidden;}");
@@ -993,6 +841,22 @@
         });
     }
 
+    //交换始终地
+    function changeWays(){
+        var pathStart=document.getElementById('pathStart').value;
+        document.getElementById('pathStart').value=document.getElementById('pathEnd').value;
+        document.getElementById('pathEnd').value=pathStart;
+
+        var lng2=lng;
+        lng=lng1;
+        lng1=lng2;
+
+        if (transfer) {
+            transfer.clear();
+            $('#panel').empty();
+            searchWays();
+        }
+    }
 
     //登录
     $('#loginBtn').click(function () {
@@ -1012,7 +876,8 @@
                 } else {
                     alert("登录成功");
                     checkLogin();
-                    document.getElementById('loginBar').hidden=true;
+                    document.getElementById('loginBar').style.display='none';
+                    document.getElementById('userBarOk').style.display='flex';
                 }
             },
 
@@ -1030,9 +895,13 @@
         window.location = "http://localhost:8080/";
     })
 
+
+    //搜索路线
+    $('#searchWays').click(function (){
+        searchWays();
+    });
     var transfer;
-        //搜索
-    $('#searchWays').click(function () {
+    function searchWays(){
         document.getElementById('favoritesBtn').style.color='#cccccc';
         $('#panel').empty();
 
@@ -1084,7 +953,7 @@
         });
 
 
-    });
+    }
 
 </script>
 </html>
