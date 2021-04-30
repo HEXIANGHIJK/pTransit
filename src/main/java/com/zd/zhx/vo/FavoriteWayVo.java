@@ -9,6 +9,9 @@ public class FavoriteWayVo {
     private String end_path_x;
     private String end_path_y;
 
+    public FavoriteWayVo() {
+    }
+
     public Integer getId() {
         return id;
     }

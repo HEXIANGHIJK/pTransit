@@ -4,6 +4,8 @@ import com.zd.zhx.pojo.Walking;
 import com.zd.zhx.pojo.Way;
 import com.zd.zhx.vo.FavoriteWayVo;
 
+import java.util.List;
+
 public interface WayService {
 
     Double getWalkTime(Double userSpeed, Walking walking);
@@ -13,5 +15,6 @@ public interface WayService {
 
     boolean checkFavoriteWay(String username,String pathStart,String pathEnd);
 
-    FavoriteWayVo[] getFavoriteWays(String username);
+    List<FavoriteWayVo> getFavoriteWays(String username);
+
 }

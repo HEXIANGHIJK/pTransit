@@ -11,12 +11,14 @@ import com.zd.zhx.pojo.Way;
 import com.zd.zhx.service.ApiService;
 import com.zd.zhx.service.WayService;
 import com.zd.zhx.utils.JsonUtils;
+import com.zd.zhx.vo.FavoriteWayVo;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -59,7 +61,7 @@ public class WayController {
         String s = str.replaceAll("\\[]", "null");
         //System.out.println(s);
         Way way = jsonToWay(s);
-        System.out.println(way.getRoute().getTransits().get(0).getSegments().get(0).getWalking().getSteps().get(5));
+        //System.out.println(way.getRoute().getTransits().get(0).getSegments().get(0).getWalking().getSteps().get(5));
         /*Way way= (Way) str2Bean(str, Way.class);
 
         System.out.println(way);
@@ -85,6 +87,13 @@ public class WayController {
         }else {
             return ResponseEntity.ok(false);
         }
+    }
+
+    @GetMapping("/getFavorites")
+    public ResponseEntity<List<FavoriteWayVo>> getFavoriteWay(String username){
+
+        List favoriteWays = wayService.getFavoriteWays(username);
+        return ResponseEntity.ok(favoriteWays);
     }
 
     public Way jsonToWay(String str) throws JsonProcessingException {
