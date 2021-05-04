@@ -11,9 +11,9 @@ public interface WayService {
     Double getWalkTime(Double userSpeed, Walking walking);
     Double getWalkTime(Double userSpeed, Way way,int tranCount,int segCount);
 
-    void saveFavoriteWay(String username,String pathStart,String pathEnd);
+    void saveFavoriteWay(String username,String pathStart,String pathEnd,String startPlace,String endPlace);
 
-    boolean checkFavoriteWay(String username,String pathStart,String pathEnd);
+    boolean checkFavoriteWay(String username,String startPlace,String endPlace);
 
     List<FavoriteWayVo> getFavoriteWays(String username);
 

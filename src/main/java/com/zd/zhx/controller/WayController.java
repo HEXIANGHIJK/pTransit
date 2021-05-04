@@ -78,11 +78,11 @@ public class WayController {
     }
 
     @PostMapping("/saveWay")
-    public ResponseEntity<Boolean> saveFavoriteWay(String username,String pathStart,String pathEnd){
-        if (username == null || pathStart == null || pathEnd == null){
+    public ResponseEntity<Boolean> saveFavoriteWay(String username,String pathStart,String pathEnd,String startPlace,String endPlace){
+        if (username == null || pathStart == null || pathEnd == null || startPlace == null || endPlace == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }else if (!wayService.checkFavoriteWay(username, pathStart, pathEnd)){
-                wayService.saveFavoriteWay(username, pathStart, pathEnd);
+        }else if (!wayService.checkFavoriteWay(username, startPlace, endPlace)){
+                wayService.saveFavoriteWay(username, pathStart, pathEnd,startPlace,endPlace);
                 return ResponseEntity.ok(true);
         }else {
             return ResponseEntity.ok(false);

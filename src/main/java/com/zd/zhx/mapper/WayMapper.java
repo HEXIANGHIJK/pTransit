@@ -11,11 +11,11 @@ import java.util.List;
 @Mapper
 public interface WayMapper {
 
-    @Insert("insert into favorites(username,start_path_x,start_path_y,end_path_x,end_path_y) values(#{username},#{spx},#{spy},#{epx},#{epy}) ")
-    public void saveFavoriteWay(@Param("username") String username, @Param("spx") String spx, @Param("spy") String spy, @Param("epx") String epx, @Param("epy") String epy);
+    @Insert("insert into favorites(username,start_path_x,start_path_y,end_path_x,end_path_y,start_place,end_place) values(#{username},#{start_path_x},#{start_path_y},#{end_path_x},#{end_path_y},#{start_place},#{end_place}) ")
+    public void saveFavoriteWay(FavoriteWayVo favoriteWayVo);
 
-    @Select("select * from favorites where username=#{username} and start_path_x=#{spx} and start_path_y=#{spy} and end_path_x=#{epx} and end_path_y=#{epy}")
-    public FavoriteWayVo selectFavoriteWay(@Param("username") String username, @Param("spx") String spx, @Param("spy") String spy, @Param("epx") String epx, @Param("epy") String epy);
+    @Select("select * from favorites where username=#{username} and start_place=#{startPlace} and end_place=#{endPlace}")
+    public FavoriteWayVo selectFavoriteWay(@Param("username") String username, @Param("startPlace") String startPlace, @Param("endPlace") String endPlace);
 
     @Select("select * from favorites")
     public List<FavoriteWayVo> selectFavoriteWayList();
