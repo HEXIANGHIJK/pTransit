@@ -63,7 +63,7 @@ public class UserController {
         HttpSession session = request.getSession();
 
         User user = userService.findByUsername(username);
-        System.out.println(user);
+
         if (user==null)
             return ResponseEntity.ok(new User());
         else if (user.getPassword().equals(password)){
@@ -77,6 +77,14 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(HttpServletRequest request,String username,String password){
+
+        User byUsername = userService.findByUsername(username);
+        if (byUsername!=null){
+            System.out.println("byUsername is found!");
+            User nullUser=null;
+            return ResponseEntity.ok(nullUser);
+        }
+
         User user=new User();
         user.setUsername(username);
         user.setPassword(password);
@@ -84,7 +92,9 @@ public class UserController {
         HttpSession session = request.getSession();
         if (returnUser!=null){
             session.setAttribute("temporarilyUser",user);
+            return ResponseEntity.ok(returnUser);
         }
+        System.out.println("返回BAD_REQUEST");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }
