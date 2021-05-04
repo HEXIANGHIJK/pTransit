@@ -715,7 +715,7 @@
     $('#favoritesBtn').click(function (){
         if (!username){
             alert("请先登录");
-            $('#bar').click();
+            $('#inLogin').click();
         }else if (lng&&lng1){
             var pathStart=lng.getLng()+","+lng.getLat();
             var pathEnd=lng1.getLng()+","+lng1.getLat();
