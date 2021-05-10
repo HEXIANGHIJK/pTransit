@@ -1,19 +1,15 @@
 package com.zd.zhx.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.zd.zhx.pojo.Transit;
-import com.zd.zhx.pojo.Walking;
 import com.zd.zhx.pojo.Way;
 import com.zd.zhx.service.ApiService;
 import com.zd.zhx.service.WayService;
-import com.zd.zhx.utils.JsonUtils;
-import com.zd.zhx.vo.FavoriteWayVo;
+import com.zd.zhx.pojo.FavoriteWay;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -90,7 +84,7 @@ public class WayController {
     }
 
     @GetMapping("/getFavorites")
-    public ResponseEntity<List<FavoriteWayVo>> getFavoriteWay(String username){
+    public ResponseEntity<List<FavoriteWay>> getFavoriteWay(String username){
 
         List favoriteWays = wayService.getFavoriteWays(username);
         return ResponseEntity.ok(favoriteWays);

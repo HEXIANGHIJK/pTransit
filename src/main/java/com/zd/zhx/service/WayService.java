@@ -2,7 +2,7 @@ package com.zd.zhx.service;
 
 import com.zd.zhx.pojo.Walking;
 import com.zd.zhx.pojo.Way;
-import com.zd.zhx.vo.FavoriteWayVo;
+import com.zd.zhx.pojo.FavoriteWay;
 
 import java.util.List;
 
@@ -15,6 +15,6 @@ public interface WayService {
 
     boolean checkFavoriteWay(String username,String startPlace,String endPlace);
 
-    List<FavoriteWayVo> getFavoriteWays(String username);
+    List<FavoriteWay> getFavoriteWays(String username);
 
 }

@@ -3,7 +3,7 @@ package com.zd.zhx.service.impl;
 import com.zd.zhx.mapper.WayMapper;
 import com.zd.zhx.pojo.*;
 import com.zd.zhx.service.WayService;
-import com.zd.zhx.vo.FavoriteWayVo;
+import com.zd.zhx.pojo.FavoriteWay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,18 +56,18 @@ public class WayServiceImpl implements WayService {
         String[] pathStartStrs = pathStart.split(",");
         String[] pathEndStrs = pathEnd.split(",");
         System.out.println(username+","+pathStartStrs[0]+","+pathStartStrs[1]+","+pathEndStrs[0]+","+pathEndStrs[1]);
-        wayMapper.saveFavoriteWay(new FavoriteWayVo(username,pathStartStrs[0],pathStartStrs[1],pathEndStrs[0],pathEndStrs[1],startPlace,endPlace));
+        wayMapper.saveFavoriteWay(new FavoriteWay(username,pathStartStrs[0],pathStartStrs[1],pathEndStrs[0],pathEndStrs[1],startPlace,endPlace));
     }
 
     @Override
     public boolean checkFavoriteWay(String username, String startPlace, String endPlace) {
 
-        FavoriteWayVo favoriteWayVo = wayMapper.selectFavoriteWay(username, startPlace, endPlace);
-        return favoriteWayVo != null;
+        FavoriteWay favoriteWay = wayMapper.selectFavoriteWay(username, startPlace, endPlace);
+        return favoriteWay != null;
     }
 
     @Override
-    public List<FavoriteWayVo> getFavoriteWays(String username) {
+    public List<FavoriteWay> getFavoriteWays(String username) {
 
         return wayMapper.selectFavoriteWayList();
     }

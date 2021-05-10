@@ -171,7 +171,36 @@
     }
 </style>
 
-<body style="background-color: #f5f5dc33; display: flex;">
+<body style="background-color: #f5f5dc33; display: flex; position: relative;">
+
+<!--弹窗-->
+<div id="pop-ups" style="display: flex; position:fixed; z-index: 1000; overflow: auto; margin: 0; height: 100%; width: 100%; background-color: #555555cc; flex-direction: column; justify-content: center; align-items: center;">
+    <div id="userUpdate" style=" z-index: 1200; height: 70%; width: 50%;background-color: white; border-radius: 10px; overflow: auto; flex-direction: column; align-items: center; justify-content: space-around; display: flex;">
+        <span style="font-size: 18px; font-weight: 200;">个人信息</span>
+
+        <div style="flex-direction: row; width: 100%; height: 50%; display: flex; justify-content: center; align-items: center;">
+            <div style="display: flex; justify-content: center; flex-direction: column; width: 15%; height: 100%; align-items: flex-end;">
+                <span style="height: 20%; width: 100%;">用户名：</span>
+                <span style="height: 20%; width: 100%;">密码：</span>
+                <span style="height: 20%; width: 100%;">类型：</span>
+                <span style="height: 20%; width: 100%;">图片：</span>
+                <span style="height: 20%; width: 100%;">个人步行速度：</span>
+            </div>
+            <div style="display: flex; justify-content: center; flex-direction: column; width: 30%; height: 100%;">
+                <input type="text" style="width: 100%; height: 20%" name="username">
+                <input type="password" style="width: 100%; height: 20%;" name="password">
+                <input type="text" style="width: 100%; height: 20%;" name="type">
+                <input type="text" style="width: 100%; height: 20%;" name="img">
+                <input type="text" style="width: 100%; height: 20%;" name="speed">
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-around; align-items: center;">
+            <div id="ckUpdate" style="color: white; background-color: #d75c00">修改</div>
+        </div>
+
+    </div>
+</div>
 
 <!--地点选择-->
 <div class="scrollbar" style="display: flex;
@@ -229,7 +258,7 @@
                          onmousemove="this.style.borderBottom=' 40px solid #dddddd'"
                          onmouseout="this.style.borderBottom=' 40px solid #bfbfbf'"
                          onclick="document.getElementById('userBarNo').style.display='flex';
-                                  document.getElementById('loginBar').style.display='none'">
+                                  document.getElementById('loginBar').style.display='none';">
                         <a class="barText"
                            style="height: 100%; width: 100%; position: absolute;top: 6px; right: 0; font-size: 18px; font-weight: 400; color: white;">返回</a>
                     </div>
@@ -259,7 +288,7 @@
                          onmousemove="this.style.borderBottom=' 40px solid #eeeeee'"
                          onmouseout="this.style.borderBottom=' 40px solid #bfbfbf'"
                          onclick="document.getElementById('userBarNo').style.display='flex';
-                                  document.getElementById('loginBar').style.display='none'">
+                                  document.getElementById('registerBar').style.display='none'">
                         <a class="barText"
                            style="height: 100%; width: 100%; position: absolute;top: 6px; right: 0; font-size: 18px; font-weight: 400; color: white;">返回</a>
                     </div>
@@ -348,7 +377,19 @@
     <div id="container"></div>
 
     <!--收藏按钮-->
-    <div id="favoritesBtn" style="height: 35px; width: 35px; position: absolute; right: 2px; bottom: 40px; background-color: white; border: 1px solid #cccccc; border-radius: 4px; display: flex; justify-content: center; align-items: center; font-size: 26px;color: #a3a3a3; font-weight: 500;">
+    <div id="favoritesBtn" style="  height: 35px;
+                                    width: 35px;
+                                    position: absolute;
+                                    right: 2px; bottom: 40px;
+                                    background-color: white;
+                                    border: 1px solid #cccccc;
+                                    border-radius: 4px;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    font-size: 26px;
+                                    color: #a3a3a3;
+                                    font-weight: 500;">
         <span>★</span>
     </div>
 </div>
@@ -654,7 +695,7 @@
         document.getElementById('searchWays').click();
     }
 
-    //搜索结果选中
+    //联想词选中
     function getThisLoc(count){
         $('#panel').empty();
         if (pathType===0){
@@ -810,7 +851,6 @@
         });
     }
 
-
     //触发登陆状态验证
     $(function (){
         checkLogin();
@@ -904,7 +944,6 @@
         window.location = "http://localhost:8080/";
     })
 
-
     //搜索路线
     $('#searchWays').click(function (){
         searchWays();
@@ -964,5 +1003,27 @@
 
     }
 
+    //弹窗关闭检测
+    var popUps=0;
+    $('#userUpdate').on('mouseover',function (){
+        popUps=1;
+    }).on('mouseout',function (){
+        popUps=0;
+    });
+
+    //用户信息修改
+    $('#userLogoBg').click(function (){
+        popUps=0;
+        document.getElementById('pop-ups').style.display='flex';
+    })
+    $('#pop-ups').click(function (){
+        if (popUps===0){
+            popUps=-1;
+            document.getElementById('pop-ups').style.display='none';
+        }
+        else{
+
+        }
+    })
 </script>
 </html>

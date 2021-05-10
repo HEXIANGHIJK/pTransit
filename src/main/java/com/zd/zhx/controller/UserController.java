@@ -24,10 +24,7 @@ public class UserController {
     public ResponseEntity<User> checkLogin(HttpServletRequest request){
         /*System.out.println("登陆状态验证");*/
         HttpSession session = request.getSession();
-        /*User user1=new User();
-        user1.setUsername("aaaaaaaaaaaaaaaaaaaaaaaa");
-        user1.setImg("img/logo.jpg");
-        session.setAttribute("user",user1);*/
+
         Object user = session.getAttribute("user");
         if (user==null){
             return ResponseEntity.ok(null);
