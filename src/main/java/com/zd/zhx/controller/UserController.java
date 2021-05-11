@@ -94,4 +94,31 @@ public class UserController {
         System.out.println("返回BAD_REQUEST");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
+
+    @PostMapping("/update")
+    public ResponseEntity<User> userUpdate(String username,String password,String type,String img,String speed){
+        try {
+            if (type.equals(""))
+                type=null;
+            if (img.equals(""))
+                img=null;
+            if (speed.equals(""))
+                speed=null;
+            User user = userService.userUpdate(username, password, type, img, speed);
+            if (user != null) {
+                return ResponseEntity.ok(user);
+            } else {
+                return ResponseEntity.ok(new User());
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @GetMapping("/delete")
+    public ResponseEntity<HttpStatus> userDel(String username){
+        userService.userDel(username);
+        return ResponseEntity.ok().build();
+    }
 }

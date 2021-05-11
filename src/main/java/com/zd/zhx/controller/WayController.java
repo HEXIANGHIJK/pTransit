@@ -90,6 +90,17 @@ public class WayController {
         return ResponseEntity.ok(favoriteWays);
     }
 
+    @PostMapping("/delFavorites")
+    public ResponseEntity<HttpStatus> delFavoriteWay(String startPlace,String endPlace){
+        try {
+            wayService.delFavoriteWay(startPlace, endPlace);
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
     public Way jsonToWay(String str) throws JsonProcessingException {
         MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return MAPPER.readValue(str, Way.class);

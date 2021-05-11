@@ -37,4 +37,15 @@ public class UserServiceImpl implements UserService {
     public Double getUserSpeed(String username) {
         return userMapper.getUserSpeed(username);
     }
+
+    @Override
+    public User userUpdate(String username, String password, String type, String img, String speed) {
+        userMapper.userUpdate(username, password, type, img, speed);//
+        return userMapper.findByUsername(username);
+    }
+
+    @Override
+    public void userDel(String username) {
+        userMapper.userDel(username);
+    }
 }

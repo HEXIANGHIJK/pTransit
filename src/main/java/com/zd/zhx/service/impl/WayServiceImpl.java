@@ -55,7 +55,7 @@ public class WayServiceImpl implements WayService {
     public void saveFavoriteWay(String username, String pathStart, String pathEnd, String startPlace, String endPlace) {
         String[] pathStartStrs = pathStart.split(",");
         String[] pathEndStrs = pathEnd.split(",");
-        System.out.println(username+","+pathStartStrs[0]+","+pathStartStrs[1]+","+pathEndStrs[0]+","+pathEndStrs[1]);
+        //System.out.println(username+","+pathStartStrs[0]+","+pathStartStrs[1]+","+pathEndStrs[0]+","+pathEndStrs[1]);
         wayMapper.saveFavoriteWay(new FavoriteWay(username,pathStartStrs[0],pathStartStrs[1],pathEndStrs[0],pathEndStrs[1],startPlace,endPlace));
     }
 
@@ -70,6 +70,11 @@ public class WayServiceImpl implements WayService {
     public List<FavoriteWay> getFavoriteWays(String username) {
 
         return wayMapper.selectFavoriteWayList();
+    }
+
+    @Override
+    public void delFavoriteWay(String startPlace, String endPlace) {
+        wayMapper.delFavoriteWay(startPlace, endPlace);
     }
 
 }

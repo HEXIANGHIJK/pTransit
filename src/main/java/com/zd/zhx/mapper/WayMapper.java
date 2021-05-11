@@ -1,10 +1,7 @@
 package com.zd.zhx.mapper;
 
 import com.zd.zhx.pojo.FavoriteWay;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -19,4 +16,7 @@ public interface WayMapper {
 
     @Select("select * from favorites")
     public List<FavoriteWay> selectFavoriteWayList();
+
+    @Delete("delete from favorites where start_place=#{startPlace} and end_place=#{endPlace}")
+    public void delFavoriteWay(@Param("startPlace") String startPlace,@Param("endPlace") String endPlace);
 }

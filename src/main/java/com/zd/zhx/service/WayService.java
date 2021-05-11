@@ -17,4 +17,6 @@ public interface WayService {
 
     List<FavoriteWay> getFavoriteWays(String username);
 
+    void delFavoriteWay(String startPlace,String endPlace);
+
 }

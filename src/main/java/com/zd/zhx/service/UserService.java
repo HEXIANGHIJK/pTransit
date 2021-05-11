@@ -4,11 +4,14 @@ import com.zd.zhx.pojo.User;
 
 public interface UserService {
 
-    public User findByUsername(String username);
+    User findByUsername(String username);
 
-    public User insertUser(User user);
+    User insertUser(User user);
 
-    public Double getUserSpeed(User user);
-    public Double getUserSpeed(String username);
+    Double getUserSpeed(User user);
+    Double getUserSpeed(String username);
 
+    User userUpdate(String username, String password, String type, String img, String speed);
+
+    void userDel(String username);
 }
